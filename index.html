@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="login" class="login-body">
+
+<div class="login-card-container animate">
+  <!-- Visual Branding Panel -->
+  <section class="login-visual-panel">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="background:#FFFFFF;padding:8px 16px;border-radius:var(--radius-md);display:inline-flex;align-items:center;box-shadow:0 4px 14px rgba(0,0,0,0.18)">
+          <img src="assets/logo.png" alt="Balaxi Pharmaceuticals" style="height:32px;width:auto;display:block">
+        </div>
+        <span class="brand-badge" style="background:rgba(255,255,255,0.18);color:#FFFFFF;border:1px solid rgba(255,255,255,0.3)">HR ENTERPRISE</span>
+      </div>
+      
+      <div style="margin-top:36px">
+        <span style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.75)">Balaxi Pharmaceuticals Limited</span>
+        <h1>Empowering People.<br>Building Healthier Tomorrows.</h1>
+        <p>A unified, modular HR workspace connecting employee self-service, manager approvals, time & attendance, payroll calculations, and compliance.</p>
+      </div>
+
+      <div class="login-feature-grid">
+        <div class="login-feature-item">
+          <div style="font-size:18px;margin-bottom:4px">👥</div>
+          <b>Role-Based Workspaces</b>
+          <span>Tailored for HR, Managers & Staff</span>
+        </div>
+        <div class="login-feature-item">
+          <div style="font-size:18px;margin-bottom:4px">⏱</div>
+          <b>Automated Time & Leave</b>
+          <span>Real-time clocking & policy checks</span>
+        </div>
+        <div class="login-feature-item">
+          <div style="font-size:18px;margin-bottom:4px">💳</div>
+          <b>Controlled Payroll Engine</b>
+          <span>6-stage processing & instant payslips</span>
+        </div>
+        <div class="login-feature-item">
+          <div style="font-size:18px;margin-bottom:4px">🛡</div>
+          <b>Compliance & Auditing</b>
+          <span>Traceable logs & secure document vault</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:12px;opacity:0.75;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,0.15);padding-top:16px">
+      <span>© 2026 Balaxi Pharmaceuticals Limited</span>
+      <span>ISO 9001 & WHO-GMP Certified</span>
+    </div>
+  </section>
+
+  <!-- Login Form Panel -->
+  <section class="login-form-panel">
+    <div style="margin-bottom:18px">
+      <div class="card-kicker">SECURE AUTHENTICATION</div>
+      <h2 style="font-size:24px;font-weight:800">Welcome to Balaxi HR</h2>
+      <p class="muted">Select a persona or enter credentials to explore the interactive system.</p>
+    </div>
+
+    <!-- Quick Role Switcher Cards -->
+    <div class="card-kicker" style="margin-top:8px">1-CLICK DEMO PERSONA SELECTION</div>
+    <div class="login-role-selector">
+      <div class="login-role-btn active" data-role-btn="employee" onclick="selectRole('employee')">
+        <b>👤 Employee</b>
+        <small>Priya (Self-Service)</small>
+      </div>
+      <div class="login-role-btn" data-role-btn="manager" onclick="selectRole('manager')">
+        <b>👥 Manager</b>
+        <small>Rohan (Approvals)</small>
+      </div>
+      <div class="login-role-btn" data-role-btn="hr" onclick="selectRole('hr')">
+        <b>🏛 HR Admin</b>
+        <small>Ananya (Full Access)</small>
+      </div>
+    </div>
+
+    <div style="background:var(--bg-subtle);border-radius:var(--radius-md);padding:10px 14px;margin-bottom:18px;border:1px solid var(--border);font-size:12px">
+      <span class="muted">Active Demo Account:</span> <b id="activeAccountLabel" style="color:var(--primary)">employee@balaxipharma.in</b>
+    </div>
+
+    <form onsubmit="event.preventDefault(); login();">
+      <div class="floating">
+        <input id="email" type="email" placeholder=" " value="employee@balaxipharma.in" required>
+        <label>Work Email Address</label>
+      </div>
+
+      <div class="floating">
+        <input id="password" type="password" placeholder=" " value="Employee@123" required>
+        <label>Password</label>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;font-size:12.5px">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--text-muted)">
+          <input type="checkbox" checked style="accent-color:var(--primary)"> Remember credentials
+        </label>
+        <a href="#" class="text-btn" onclick="alert('Password reset link sent to demo registered email.')">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn primary lg" style="width:100%;box-shadow:var(--shadow-md)">
+        Launch Balaxi Portal &nbsp;→
+      </button>
+    </form>
+
+    <div style="margin-top:24px;text-align:center;font-size:11.5px;color:var(--text-muted)">
+      <span>Protected by Enterprise Single Sign-On (SSO) & Multi-Factor Authentication.</span>
+    </div>
+  </section>
+</div>
+
+<script>
+const CREDS = {
+  employee: { email: "employee@balaxipharma.in", pass: "Employee@123", role: "Employee", name: "Priya Sharma", title: "Lead Formulations Scientist", dept: "R&D Operations", id: "EMP-1024" },
+  manager: { email: "manager@balaxipharma.in", pass: "Manager@123", role: "Manager", name: "Rohan Mehta", title: "QA & Formulations Lead", dept: "Operations", id: "EMP-1004" },
+  hr: { email: "hr@balaxipharma.in", pass: "HR@12345", role: "HR", name: "Ananya Rao", title: "HR Director", dept: "People Operations", id: "EMP-0012" }
+};
+
+let selected = "employee";
+
+function selectRole(r) {
+  selected = r;
+  document.querySelectorAll("[data-role-btn]").forEach(b => {
+    b.classList.toggle("active", b.dataset.roleBtn === r);
+  });
+  const data = CREDS[r];
+  document.getElementById("email").value = data.email;
+  document.getElementById("password").value = data.pass;
+  document.getElementById("activeAccountLabel").textContent = data.email + " (" + data.role + ")";
+}
+
+function login() {
+  const enteredEmail = document.getElementById("email").value.trim();
+  const enteredPass = document.getElementById("password").value.trim();
+  
+  // Find matching user or fallback to active persona
+  let matched = Object.values(CREDS).find(u => u.email === enteredEmail && u.pass === enteredPass);
+  if (!matched) {
+    matched = CREDS[selected];
+  }
+  
+  localStorage.setItem("hrmUser", JSON.stringify({
+    email: matched.email,
+    password: matched.pass,
+    role: matched.role,
+    name: matched.name,
+    title: matched.title,
+    department: matched.dept,
+    id: matched.id
+  }));
+  
+  location.href = "pages/dashboard.html";
+}
+</script>
+</body>
+</html>

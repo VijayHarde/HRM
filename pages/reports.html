@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Reports & Analytics · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="reports">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search report metrics, exports…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Workforce Analytics</strong>
+      <small>Decision Intelligence</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>📊</span> Analytics / Workforce Intelligence</div>
+          <h1 class="page-title">Reports & Workforce Analytics</h1>
+          <p class="subtitle">Real-time operational dashboards, attendance heatmaps, leave utilization, and statutory exports.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Report refreshed with latest transaction data')">↻ Refresh Data</button>
+          <button class="btn primary" onclick="toast('Full HR Analytics Pack exported as PDF')">📥 Export Executive PDF</button>
+        </div>
+      </div>
+
+      <!-- Top Summary Metrics -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Headcount</span>
+            <div class="stat-icon purple">👥</div>
+          </div>
+          <div class="num">248</div>
+          <div class="trend"><span>↑ 5.8%</span> YoY Growth</div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Leave Utilization</span>
+            <div class="stat-icon green">🌴</div>
+          </div>
+          <div class="num">35.7%</div>
+          <div class="trend"><span>Healthy pace (FY 26-27)</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Average Attendance</span>
+            <div class="stat-icon blue">⏱</div>
+          </div>
+          <div class="num">89.4%</div>
+          <div class="trend"><span>8h 14m avg daily hours</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Annualized Attrition</span>
+            <div class="stat-icon amber">📉</div>
+          </div>
+          <div class="num">8.2%</div>
+          <div class="trend"><span>Industry benchmark 12%</span></div>
+        </div>
+      </div>
+
+      <!-- Analytics Charts Section -->
+      <div class="grid grid-2" style="margin-bottom:22px">
+        <!-- Headcount Movement Chart -->
+        <div class="card">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">Workforce Growth Trend (2026)</div>
+              <div class="card-sub">Net headcount movement across months</div>
+            </div>
+            <span class="pill info">+14 Net New Hires</span>
+          </div>
+
+          <div style="margin-top:14px">
+            <svg viewBox="0 0 500 160" style="width:100%;height:150px">
+              <path d="M20 130 Q 100 115, 180 90 T 340 55 T 480 25 L 480 150 L 20 150 Z" fill="rgba(79, 70, 229, 0.08)" />
+              <path d="M20 130 Q 100 115, 180 90 T 340 55 T 480 25" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="20" cy="130" r="4" fill="var(--primary)" />
+              <circle cx="180" cy="90" r="4" fill="var(--primary)" />
+              <circle cx="340" cy="55" r="4" fill="var(--primary)" />
+              <circle cx="480" cy="25" r="5" fill="var(--primary)" stroke="#FFFFFF" stroke-width="2"/>
+              <text x="440" y="16" font-size="11" font-weight="700" fill="var(--primary)">248 Staff</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Department Breakdown -->
+        <div class="card">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">Department Distribution</div>
+              <div class="card-sub">Headcount allocation by function</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px;font-size:12.5px">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span>Engineering & Tech (142 members)</span>
+                <b>57%</b>
+              </div>
+              <div class="progress-bar"><span style="width:57%"></span></div>
+            </div>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span>Product & UX Design (38 members)</span>
+                <b>15%</b>
+              </div>
+              <div class="progress-bar purple"><span style="width:15%;background:var(--accent)"></span></div>
+            </div>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span>Finance & Legal (22 members)</span>
+                <b>9%</b>
+              </div>
+              <div class="progress-bar amber"><span style="width:9%"></span></div>
+            </div>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span>Marketing & Growth (18 members)</span>
+                <b>7%</b>
+              </div>
+              <div class="progress-bar info"><span style="width:7%;background:var(--secondary)"></span></div>
+            </div>
+
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span>People & HR Operations (14 members)</span>
+                <b>6%</b>
+              </div>
+              <div class="progress-bar success"><span style="width:6%"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standard Report Generators Catalog -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">Operational Reports Catalog</div>
+        
+        <div class="grid grid-3">
+          <div class="card" style="background:var(--bg-subtle)">
+            <b style="font-size:14px">Monthly Attendance & Regularization</b>
+            <p class="muted" style="font-size:12px;margin:6px 0 12px">Summary of working hours, missed punches, biometric events, and shift compliance.</p>
+            <button class="btn sm primary" onclick="toast('Attendance report downloaded as Excel (.xlsx)')">📥 Export (.xlsx)</button>
+          </div>
+
+          <div class="card" style="background:var(--bg-subtle)">
+            <b style="font-size:14px">Leave Utilization & Balances</b>
+            <p class="muted" style="font-size:12px;margin:6px 0 12px">Department-level leave consumption, opening/accrued balances, and carry-forward limits.</p>
+            <button class="btn sm primary" onclick="toast('Leave utilization report generated')">📥 Export (.xlsx)</button>
+          </div>
+
+          <div class="card" style="background:var(--bg-subtle)">
+            <b style="font-size:14px">Payroll & Statutory Summary</b>
+            <p class="muted" style="font-size:12px;margin:6px 0 12px">Monthly salary register, PF contribution reports, TDS deduction schedules, and net disbursement.</p>
+            <button class="btn sm primary" onclick="toast('Payroll statutory file prepared')">📥 Export (.csv)</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

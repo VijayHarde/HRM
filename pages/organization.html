@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organization Structure · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="organization">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search departments, leaders, locations…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Organizational Master</strong>
+      <small>Structure & Reporting Lines</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>🏛</span> Organization / Master Data</div>
+          <h1 class="page-title">Organization & Structure</h1>
+          <p class="subtitle">Interactive organizational hierarchy, departments directory, and office hubs.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Org structure exported as PDF')">Export Chart</button>
+          <button class="btn primary" onclick="openModal('addDeptModal')">＋ Add Department</button>
+        </div>
+      </div>
+
+      <!-- Key Organization Stats -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Departments</span>
+            <div class="stat-icon purple">🏛</div>
+          </div>
+          <div class="num">6</div>
+          <div class="trend"><span>Eng, Product, People, Finance...</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Workforce</span>
+            <div class="stat-icon blue">👥</div>
+          </div>
+          <div class="num">248</div>
+          <div class="trend"><span>Across 3 global offices</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Designation Titles</span>
+            <div class="stat-icon green">🏷</div>
+          </div>
+          <div class="num">24</div>
+          <div class="trend"><span>Standardized salary grades</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Locations / Hubs</span>
+            <div class="stat-icon amber">📍</div>
+          </div>
+          <div class="num">3</div>
+          <div class="trend"><span>Pune, Bengaluru, Remote</span></div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="tabs" id="orgTabs">
+        <button class="active" data-tab="chart">Interactive Hierarchy Tree</button>
+        <button data-tab="departments">Department Directory</button>
+        <button data-tab="locations">Office Locations</button>
+      </div>
+
+      <!-- TAB 1: ORG CHART TREE -->
+      <section id="tab-chart" class="tab-panel active">
+        <div class="card" style="overflow-x:auto;padding:32px 20px">
+          <div class="org-tree">
+            <!-- Level 1: CEO -->
+            <div class="org-node root-node">
+              <img src="../assets/avatar.svg" alt="CEO">
+              <div class="org-node-info">
+                <b>Vikramaditya Singhania</b>
+                <span>Chief Executive Officer</span>
+                <span class="badge">Executive Leadership</span>
+              </div>
+            </div>
+
+            <div style="width:2px;height:24px;background:var(--border)"></div>
+
+            <!-- Level 2: VPs / Heads -->
+            <div class="org-children">
+              <!-- HR Head -->
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="org-node">
+                  <img src="../assets/avatar.svg" alt="HR">
+                  <div class="org-node-info">
+                    <b>Ananya Rao</b>
+                    <span>HR Director</span>
+                    <span class="badge" style="background:var(--accent-light);color:var(--accent)">People Ops (14)</span>
+                  </div>
+                </div>
+                
+                <div style="width:2px;height:20px;background:var(--border)"></div>
+                
+                <div class="org-node" style="min-width:210px">
+                  <img src="../assets/avatar.svg" alt="Specialist">
+                  <div class="org-node-info">
+                    <b>Meera Iyer</b>
+                    <span>Senior HR Specialist</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Engineering Head -->
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="org-node">
+                  <img src="../assets/avatar.svg" alt="Eng">
+                  <div class="org-node-info">
+                    <b>Rohan Mehta</b>
+                    <span>Engineering Lead</span>
+                    <span class="badge" style="background:var(--secondary-light);color:var(--secondary)">Engineering (142)</span>
+                  </div>
+                </div>
+
+                <div style="width:2px;height:20px;background:var(--border)"></div>
+
+                <div style="display:flex;gap:14px">
+                  <div class="org-node" style="min-width:200px">
+                    <img src="../assets/avatar.svg" alt="Priya">
+                    <div class="org-node-info">
+                      <b>Priya Sharma</b>
+                      <span>Lead Product Designer</span>
+                    </div>
+                  </div>
+
+                  <div class="org-node" style="min-width:200px">
+                    <img src="../assets/avatar.svg" alt="Arjun">
+                    <div class="org-node-info">
+                      <b>Arjun Kapoor</b>
+                      <span>Senior Frontend Eng</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Finance Head -->
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <div class="org-node">
+                  <img src="../assets/avatar.svg" alt="Finance">
+                  <div class="org-node-info">
+                    <b>Siddharth Roy</b>
+                    <span>VP of Finance</span>
+                    <span class="badge" style="background:var(--success-light);color:var(--success)">Finance & Legal (22)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: DEPARTMENTS DIRECTORY -->
+      <section id="tab-departments" class="tab-panel">
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Engineering & Technology</b>
+              <span class="pill info">142 Members</span>
+            </div>
+            <p class="muted" style="margin:8px 0 14px;font-size:12.5px">Software engineering, architecture, quality assurance, and DevOps operations.</p>
+            <div style="font-size:12px;border-top:1px solid var(--border);padding-top:10px">
+              <div><b>Head:</b> Rohan Mehta</div>
+              <div><b>Budget:</b> ₹4.2Cr Annual</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Product & UX Design</b>
+              <span class="pill purple">38 Members</span>
+            </div>
+            <p class="muted" style="margin:8px 0 14px;font-size:12.5px">Product management, user experience research, UI systems, and design tokens.</p>
+            <div style="font-size:12px;border-top:1px solid var(--border);padding-top:10px">
+              <div><b>Lead:</b> Priya Sharma</div>
+              <div><b>Budget:</b> ₹1.4Cr Annual</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">People & HR Operations</b>
+              <span class="pill success">14 Members</span>
+            </div>
+            <p class="muted" style="margin:8px 0 14px;font-size:12.5px">Talent acquisition, employee engagement, HR compliance, and payroll processing.</p>
+            <div style="font-size:12px;border-top:1px solid var(--border);padding-top:10px">
+              <div><b>Director:</b> Ananya Rao</div>
+              <div><b>Budget:</b> ₹90L Annual</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Finance & Accounting</b>
+              <span class="pill warn">22 Members</span>
+            </div>
+            <p class="muted" style="margin:8px 0 14px;font-size:12.5px">Financial planning, statutory tax compliance, treasury, and accounts payable.</p>
+            <div style="font-size:12px;border-top:1px solid var(--border);padding-top:10px">
+              <div><b>VP:</b> Siddharth Roy</div>
+              <div><b>Budget:</b> ₹85L Annual</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Marketing & Growth</b>
+              <span class="pill info">18 Members</span>
+            </div>
+            <p class="muted" style="margin:8px 0 14px;font-size:12.5px">Brand strategy, growth hacking, content, and developer relations.</p>
+            <div style="font-size:12px;border-top:1px solid var(--border);padding-top:10px">
+              <div><b>Lead:</b> Tanya Verma</div>
+              <div><b>Budget:</b> ₹1.1Cr Annual</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Customer Success</b>
+              <span class="pill purple">14 Members</span>
+            </div>
+            <p class="muted" style="margin:8px 0 14px;font-size:12.5px">Client onboarding, account management, enterprise support, and SLA governance.</p>
+            <div style="font-size:12px;border-top:1px solid var(--border);padding-top:10px">
+              <div><b>Head:</b> Kabir Sen</div>
+              <div><b>Budget:</b> ₹75L Annual</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: LOCATIONS -->
+      <section id="tab-locations" class="tab-panel">
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Pune Innovation Hub</b>
+              <span class="pill success">Headquarters</span>
+            </div>
+            <p class="muted" style="margin:8px 0 12px">Magarpatta Cybercity, Tower 4, Pune, Maharashtra, India</p>
+            <div style="font-size:12px;color:var(--text-muted)">
+              <div><b>Capacity:</b> 180 seats · 140 active</div>
+              <div><b>Timezone:</b> IST (UTC+5:30)</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Bengaluru R&D Center</b>
+              <span class="pill info">Regional Hub</span>
+            </div>
+            <p class="muted" style="margin:8px 0 12px">Indiranagar 100ft Road, Bengaluru, Karnataka, India</p>
+            <div style="font-size:12px;color:var(--text-muted)">
+              <div><b>Capacity:</b> 80 seats · 65 active</div>
+              <div><b>Timezone:</b> IST (UTC+5:30)</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="stat-head">
+              <b style="font-size:16px">Global Remote Workforce</b>
+              <span class="pill purple">Distributed</span>
+            </div>
+            <p class="muted" style="margin:8px 0 12px">Secure VPN and virtual check-in enabled worldwide</p>
+            <div style="font-size:12px;color:var(--text-muted)">
+              <div><b>Active:</b> 43 distributed engineers</div>
+              <div><b>Policy:</b> Flexible hybrid / full remote</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Add Department -->
+<div id="addDeptModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="card-kicker">MASTER DATA</div>
+        <h3>Create New Department</h3>
+        <p>Define department code, department head, and organizational unit.</p>
+      </div>
+      <button class="close" onclick="closeModal('addDeptModal')">×</button>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="floating">
+        <input placeholder=" " required>
+        <label>Department Name</label>
+      </div>
+      <div class="floating">
+        <input placeholder=" " value="DEP-007" required>
+        <label>Department Code</label>
+      </div>
+      <div class="floating">
+        <select>
+          <option>Rohan Mehta</option>
+          <option>Ananya Rao</option>
+          <option>Siddharth Roy</option>
+        </select>
+        <label>Department Head</label>
+      </div>
+      <div class="floating">
+        <select>
+          <option>Pune Innovation Hub</option>
+          <option>Bengaluru R&D Center</option>
+          <option>Remote</option>
+        </select>
+        <label>Primary Office</label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal('addDeptModal')">Cancel</button>
+      <button class="btn primary" onclick="closeModal('addDeptModal');toast('New department created successfully')">Create Department</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+document.querySelectorAll("#orgTabs button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#orgTabs button").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.dataset.tab)?.classList.add("active");
+  });
+});
+</script>
+</body>
+</html>

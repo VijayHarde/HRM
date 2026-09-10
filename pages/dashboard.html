@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="dashboard">
+
+<!-- App Header -->
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search employees, policies, leave records…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    
+    <div class="sidebar-card">
+      <strong>Balaxi Pharmaceuticals</strong>
+      <small>Enterprise Edition · 2026</small>
+    </div>
+  </aside>
+
+  <!-- Main Content Body -->
+  <main class="main">
+    <div class="animate">
+      
+      <!-- Page Header & Breadcrumb -->
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>🏠</span> <span data-role>Role</span> Workspace / Overview</div>
+          <h1 class="page-title">Executive Dashboard</h1>
+          <p class="subtitle">Real-time overview personalized to your role and organizational permissions.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Workspace refreshed');setTimeout(()=>location.reload(),300)">↻ Refresh</button>
+          <button class="btn primary" onclick="go('approvals')">✓ View Approvals</button>
+        </div>
+      </div>
+
+      <!-- =========================================================================
+           1. EMPLOYEE DASHBOARD VIEW
+           ========================================================================= -->
+      <section class="role-dashboard role-employee" style="display:none">
+        
+        <!-- Hero Banner with Live Punch Clock -->
+        <div class="grid grid-2-1" style="margin-bottom:20px">
+          <div class="card card-gradient-hero" style="display:flex;flex-direction:column;justify-content:space-between">
+            <div>
+              <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF;margin-bottom:12px">
+                <span class="live-dot" style="background:#10B981"></span> Live Shift Active
+              </span>
+              <h2 style="font-size:26px;color:#FFFFFF;margin-bottom:6px">Good day, <span data-user>Priya</span> 👋</h2>
+              <p style="color:rgba(255,255,255,0.85);font-size:13.5px;max-width:480px">
+                You're checked in from <b>Pune Innovation Center</b>. You've completed 78% of today's target working hours.
+              </p>
+            </div>
+            
+            <div style="display:flex;gap:12px;margin-top:20px">
+              <button class="btn" style="background:#FFFFFF;color:var(--primary);font-weight:700" onclick="go('attendance')">⏱ Time Log & Punch</button>
+              <button class="btn ghost" style="color:#FFFFFF;border-color:rgba(255,255,255,0.3)" onclick="go('leave')">📅 Apply for Leave</button>
+            </div>
+          </div>
+
+          <!-- Live Web Clock Card -->
+          <div class="clock-card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="live-badge"><span class="live-dot"></span> Online</span>
+              <small style="opacity:0.8;font-size:11.5px">Shift: 09:00 - 18:00</small>
+            </div>
+            <div class="clock-timer">09:14 <span style="font-size:20px;opacity:0.8">32</span></div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.8);margin-bottom:10px">Logged in at <b>09:14 AM</b> · 6h 42m elapsed</div>
+            <div class="progress-bar success"><span style="width:78%"></span></div>
+            
+            <div class="clock-actions">
+              <button class="btn sm danger" onclick="toast('Checked out successfully');this.textContent='Checked Out';this.disabled=true">Check Out</button>
+              <button class="btn sm" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.2)" onclick="toast('Break period started (30m allotted)')">Take Break</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Key Stat Metric Tiles -->
+        <div class="grid grid-4" style="margin-bottom:22px">
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Monthly Attendance</span>
+              <div class="stat-icon green">⏱</div>
+            </div>
+            <div class="num">89.4%</div>
+            <div class="trend"><span>↑ 2.4%</span> vs last month</div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Leave Balance</span>
+              <div class="stat-icon purple">📅</div>
+            </div>
+            <div class="num">27 <span style="font-size:15px;color:var(--text-muted);font-weight:500">days</span></div>
+            <div class="trend"><span>15 used</span> · 42 entitlement</div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Latest Net Pay</span>
+              <div class="stat-icon blue">💳</div>
+            </div>
+            <div class="num">₹1,02,000</div>
+            <div class="trend"><span>August 2026</span> · Paid</div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Compliance Vault</span>
+              <div class="stat-icon amber">📁</div>
+            </div>
+            <div class="num">6 <span style="font-size:15px;color:var(--text-muted);font-weight:500">/ 8</span></div>
+            <div class="trend negative"><span>1 expiring soon</span></div>
+          </div>
+        </div>
+
+        <!-- Employee Middle Section -->
+        <div class="grid grid-2" style="margin-bottom:22px">
+          <!-- Weekly Attendance Summary -->
+          <div class="card">
+            <div class="section-head compact">
+              <div>
+                <div class="card-title">Weekly Attendance Hours</div>
+                <div class="card-sub">Mon, 01 Sep - Sun, 07 Sep 2026</div>
+              </div>
+              <span class="pill success">On Target (41h 18m)</span>
+            </div>
+            
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;height:140px;padding:12px 10px;background:var(--bg-subtle);border-radius:var(--radius-md);margin-top:10px">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="width:28px;height:95px;background:var(--primary);border-radius:4px"></div>
+                <b style="font-size:11px">Mon</b>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="width:28px;height:102px;background:var(--primary);border-radius:4px"></div>
+                <b style="font-size:11px">Tue</b>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="width:28px;height:88px;background:var(--primary);border-radius:4px"></div>
+                <b style="font-size:11px">Wed</b>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="width:28px;height:96px;background:var(--primary);border-radius:4px"></div>
+                <b style="font-size:11px">Thu</b>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+                <div style="width:28px;height:90px;background:var(--primary);border-radius:4px"></div>
+                <b style="font-size:11px">Fri</b>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.4">
+                <div style="width:28px;height:15px;background:var(--text-light);border-radius:4px"></div>
+                <b style="font-size:11px">Sat</b>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0.4">
+                <div style="width:28px;height:10px;background:var(--text-light);border-radius:4px"></div>
+                <b style="font-size:11px">Sun</b>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:12.5px">
+              <span><b>Avg Daily:</b> 8h 16m</span>
+              <a href="attendance.html" class="text-btn">View Detailed Timesheet →</a>
+            </div>
+          </div>
+
+          <!-- Pending Attention Items -->
+          <div class="card">
+            <div class="section-head compact">
+              <div>
+                <div class="card-title">Action Center</div>
+                <div class="card-sub">Important tasks requiring your input</div>
+              </div>
+              <span class="count-badge">2</span>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-subtle);cursor:pointer" onclick="go('documents')">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <span style="font-size:20px;color:var(--danger)">⚠️</span>
+                  <div>
+                    <b style="font-size:13px">Work Permit Renewal Needed</b>
+                    <p class="muted" style="font-size:11.5px">Expires in 9 days (18 Sep 2026)</p>
+                  </div>
+                </div>
+                <button class="btn sm danger" onclick="event.stopPropagation();go('documents')">Upload</button>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-subtle);cursor:pointer" onclick="go('profile')">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <span style="font-size:20px;color:var(--warning)">👤</span>
+                  <div>
+                    <b style="font-size:13px">Complete Emergency Contact</b>
+                    <p class="muted" style="font-size:11.5px">Finish profile compliance score (92% → 100%)</p>
+                  </div>
+                </div>
+                <button class="btn sm" onclick="event.stopPropagation();go('profile')">Complete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Access Shortcuts -->
+        <div class="card">
+          <div class="card-title" style="margin-bottom:14px">Quick Employee Services</div>
+          <div class="grid grid-4">
+            <button class="btn" style="padding:16px;justify-content:flex-start;text-align:left;height:auto" onclick="go('profile')">
+              <span style="font-size:22px">👤</span>
+              <div>
+                <b>My Profile</b>
+                <small class="muted" style="display:block">Update personal & bank info</small>
+              </div>
+            </button>
+            <button class="btn" style="padding:16px;justify-content:flex-start;text-align:left;height:auto" onclick="go('leave')">
+              <span style="font-size:22px">📅</span>
+              <div>
+                <b>Apply Leave</b>
+                <small class="muted" style="display:block">Request vacation or sick leave</small>
+              </div>
+            </button>
+            <button class="btn" style="padding:16px;justify-content:flex-start;text-align:left;height:auto" onclick="go('payslips')">
+              <span style="font-size:22px">📄</span>
+              <div>
+                <b>View Payslips</b>
+                <small class="muted" style="display:block">Download August 2026 PDF</small>
+              </div>
+            </button>
+            <button class="btn" style="padding:16px;justify-content:flex-start;text-align:left;height:auto" onclick="go('holidays')">
+              <span style="font-size:22px">🎉</span>
+              <div>
+                <b>Holidays 2026</b>
+                <small class="muted" style="display:block">Upcoming company holidays</small>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           2. MANAGER DASHBOARD VIEW
+           ========================================================================= -->
+      <section class="role-dashboard role-manager" style="display:none">
+        <!-- Manager Welcome Card -->
+        <div class="card card-gradient-hero" style="margin-bottom:20px">
+          <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF;margin-bottom:10px">
+            Engineering Team Hub · 18 Members
+          </span>
+          <h2 style="font-size:24px;color:#FFFFFF">Welcome back, Lead <span data-user>Rohan</span> 👋</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:13.5px">
+            16 team members are active today. You have <b>3 pending approvals</b> requiring your sign-off before end of week.
+          </p>
+        </div>
+
+        <!-- Manager Stat Tiles -->
+        <div class="grid grid-4" style="margin-bottom:22px">
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Team Strength</span>
+              <div class="stat-icon blue">👥</div>
+            </div>
+            <div class="num">18</div>
+            <div class="trend"><span>16 present today</span> (89%)</div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Pending Approvals</span>
+              <div class="stat-icon amber">✓</div>
+            </div>
+            <div class="num">3 <span style="font-size:14px;color:var(--warning);font-weight:700">Action</span></div>
+            <div class="trend negative"><span>2 Leave · 1 Punch Fix</span></div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Team Attendance Rate</span>
+              <div class="stat-icon green">⏱</div>
+            </div>
+            <div class="num">92.4%</div>
+            <div class="trend"><span>↑ 1.2%</span> vs last cycle</div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">On Leave Today</span>
+              <div class="stat-icon purple">📅</div>
+            </div>
+            <div class="num">2</div>
+            <div class="trend"><span>Meera & Arjun</span></div>
+          </div>
+        </div>
+
+        <!-- Manager Quick Action Approvals Queue -->
+        <div class="card table-wrap" style="margin-bottom:22px">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">Pending Team Approvals Queue</div>
+              <div class="card-sub">Review and decide direct reports requests</div>
+            </div>
+            <button class="btn sm primary" onclick="go('approvals')">Open Approvals Hub →</button>
+          </div>
+          
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Team Member</th>
+                <th>Request Type</th>
+                <th>Details / Duration</th>
+                <th>Submitted</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <img src="../assets/avatar.svg" alt="Priya">
+                    <div>
+                      <b>Priya Sharma</b>
+                      <span class="muted">Lead Product Designer</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="pill purple">Annual Leave</span></td>
+                <td>21–23 Sep 2026 · 3 days (Family travel)</td>
+                <td>05 Sep 2026</td>
+                <td>
+                  <div style="display:flex;gap:6px">
+                    <button class="btn sm primary" onclick="toast('Leave approved for Priya Sharma');this.closest('tr').remove()">Approve</button>
+                    <button class="btn sm danger" onclick="toast('Leave rejected');this.closest('tr').remove()">Reject</button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="employee-cell">
+                    <img src="../assets/avatar.svg" alt="Arjun">
+                    <div>
+                      <b>Arjun Kapoor</b>
+                      <span class="muted">Frontend Engineer</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="pill warn">Attendance Regularization</span></td>
+                <td>07 Sep 2026 · Missed punch (09:15 - 18:00)</td>
+                <td>08 Sep 2026</td>
+                <td>
+                  <div style="display:flex;gap:6px">
+                    <button class="btn sm primary" onclick="toast('Regularization approved for Arjun');this.closest('tr').remove()">Approve</button>
+                    <button class="btn sm danger" onclick="toast('Regularization rejected');this.closest('tr').remove()">Reject</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Manager Shortcuts -->
+        <div class="grid grid-3">
+          <div class="card" style="cursor:pointer" onclick="go('team')">
+            <div style="font-size:24px;margin-bottom:8px">👥</div>
+            <div class="card-title">My Team Directory</div>
+            <p class="muted" style="margin-top:4px">View direct reports, shifts, leave balances, and availability status.</p>
+          </div>
+
+          <div class="card" style="cursor:pointer" onclick="go('reports')">
+            <div style="font-size:24px;margin-bottom:8px">📊</div>
+            <div class="card-title">Team Analytics</div>
+            <p class="muted" style="margin-top:4px">Track department attendance patterns, overtime, and leave utilization.</p>
+          </div>
+
+          <div class="card" style="cursor:pointer" onclick="go('organization')">
+            <div style="font-size:24px;margin-bottom:8px">🏛</div>
+            <div class="card-title">Organization Chart</div>
+            <p class="muted" style="margin-top:4px">Explore the organizational reporting hierarchy and departments.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           3. HR ADMINISTRATOR DASHBOARD VIEW
+           ========================================================================= -->
+      <section class="role-dashboard role-hr" style="display:none">
+        <!-- HR Header Hero -->
+        <div class="card card-gradient-hero" style="margin-bottom:20px">
+          <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF;margin-bottom:10px">
+            HR Command Center · All Systems Operational
+          </span>
+          <h2 style="font-size:24px;color:#FFFFFF">Executive HR Dashboard — Welcome, <span data-user>Ananya</span> 👋</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:13.5px">
+            Managing <b>248 active employees</b> across 6 departments. Payroll for August 2026 is prepared for final approval and lock.
+          </p>
+        </div>
+
+        <!-- HR Top KPI Grid -->
+        <div class="grid grid-4" style="margin-bottom:22px">
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Total Workforce</span>
+              <div class="stat-icon purple">👥</div>
+            </div>
+            <div class="num">248</div>
+            <div class="trend"><span>+14 this year</span> · 98% active</div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Org Attendance</span>
+              <div class="stat-icon green">⏱</div>
+            </div>
+            <div class="num">89.1%</div>
+            <div class="trend"><span>221 present today</span></div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">Pending HR Actions</span>
+              <div class="stat-icon amber">⚠️</div>
+            </div>
+            <div class="num">12</div>
+            <div class="trend negative"><span>Documents & Leaves</span></div>
+          </div>
+
+          <div class="card stat">
+            <div class="stat-head">
+              <span class="label">August Payroll</span>
+              <div class="stat-icon blue">💳</div>
+            </div>
+            <div class="num" style="font-size:22px">₹1.46Cr</div>
+            <div class="trend"><span>Review stage</span> (Ready)</div>
+          </div>
+        </div>
+
+        <!-- HR Grid Middle (Workforce Movement & Payroll Stage) -->
+        <div class="grid grid-2" style="margin-bottom:22px">
+          <!-- Headcount Trend Chart -->
+          <div class="card">
+            <div class="section-head compact">
+              <div>
+                <div class="card-title">Workforce Growth Trend</div>
+                <div class="card-sub">Trailing 6 Months (Apr - Sep 2026)</div>
+              </div>
+              <span class="pill info">+5.8% Growth</span>
+            </div>
+            
+            <div style="margin-top:14px">
+              <svg viewBox="0 0 500 160" style="width:100%;height:150px">
+                <defs>
+                  <linearGradient id="hrGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#2563EB" stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color="#2563EB" stop-opacity="0.0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M20 120 Q 100 110, 180 85 T 340 50 T 480 25 L 480 150 L 20 150 Z" fill="url(#hrGrad)" />
+                <path d="M20 120 Q 100 110, 180 85 T 340 50 T 480 25" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="20" cy="120" r="4" fill="#2563EB" />
+                <circle cx="180" cy="85" r="4" fill="#2563EB" />
+                <circle cx="340" cy="50" r="4" fill="#2563EB" />
+                <circle cx="480" cy="25" r="5" fill="#2563EB" stroke="#FFFFFF" stroke-width="2"/>
+                <text x="450" y="15" font-size="11" font-weight="700" fill="#2563EB">248 Staff</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- HR Operations Action Hub -->
+          <div class="card">
+            <div class="section-head compact">
+              <div>
+                <div class="card-title">HR Operations & Workflows</div>
+                <div class="card-sub">Quick shortcuts to mission-critical HR modules</div>
+              </div>
+            </div>
+
+            <div class="grid grid-2" style="margin-top:10px">
+              <button class="btn" style="padding:14px;justify-content:flex-start" onclick="go('employee-add')">
+                <span style="font-size:20px">＋</span>
+                <div style="text-align:left">
+                  <b>Onboard Employee</b>
+                  <small class="muted" style="display:block">New hire wizard</small>
+                </div>
+              </button>
+
+              <button class="btn" style="padding:14px;justify-content:flex-start" onclick="go('payroll')">
+                <span style="font-size:20px">💳</span>
+                <div style="text-align:left">
+                  <b>Run Payroll Engine</b>
+                  <small class="muted" style="display:block">August cycle</small>
+                </div>
+              </button>
+
+              <button class="btn" style="padding:14px;justify-content:flex-start" onclick="go('offboarding')">
+                <span style="font-size:20px">🚪</span>
+                <div style="text-align:left">
+                  <b>Offboarding</b>
+                  <small class="muted" style="display:block">Exit clearance</small>
+                </div>
+              </button>
+
+              <button class="btn" style="padding:14px;justify-content:flex-start" onclick="go('audit-logs')">
+                <span style="font-size:20px">🛡</span>
+                <div style="text-align:left">
+                  <b>Audit Trail</b>
+                  <small class="muted" style="display:block">Compliance logs</small>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

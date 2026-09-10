@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Profile · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="profile">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search profile sections, documents…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Self-Service Hub</strong>
+      <small>Profile & Records</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>👤</span> Employee / Self-Service</div>
+          <h1 class="page-title">My Profile & Employment Record</h1>
+          <p class="subtitle">Maintain your personal information, emergency contacts, skills, and banking data.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Profile summary exported as PDF')">📄 Export Profile</button>
+          <button class="btn primary" onclick="toast('Profile changes saved successfully')">💾 Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Profile Hero Banner -->
+      <div class="card card-gradient-hero" style="margin-bottom:22px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:20px">
+          <img src="../assets/avatar.svg" alt="Avatar" style="width:78px;height:78px;border-radius:50%;border:3px solid #FFFFFF;background:var(--primary-light)">
+          <div>
+            <h2 style="font-size:24px;color:#FFFFFF;margin-bottom:2px" data-user>Priya Sharma</h2>
+            <p style="color:rgba(255,255,255,0.85);font-size:13.5px">
+              <span data-user-title>Lead Product Designer</span> · Engineering & UX · <span data-user-id>EMP-1024</span>
+            </p>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF">Full-Time</span>
+              <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF">Pune Office (Hybrid)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.15);padding:16px 20px;border-radius:var(--radius-lg);backdrop-filter:blur(6px);text-align:right">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);text-transform:uppercase">Profile Completeness</div>
+          <div style="font-size:28px;font-weight:800;color:#FFFFFF;margin:2px 0">92%</div>
+          <div class="progress-bar success" style="width:160px"><span style="width:92%"></span></div>
+        </div>
+      </div>
+
+      <!-- Profile Tabs -->
+      <div class="tabs" id="profileTabs">
+        <button class="active" data-tab="personal">Personal Details</button>
+        <button data-tab="employment">Employment & Team</button>
+        <button data-tab="emergency">Emergency Contact</button>
+        <button data-tab="experience">Career & Education</button>
+        <button data-tab="bank">Bank & Statutory</button>
+      </div>
+
+      <!-- TAB 1: PERSONAL -->
+      <section id="tab-personal" class="tab-panel active">
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="card-title">Identity & Contact</div>
+            <div class="card-sub" style="margin-bottom:16px">Primary identification and communication channels</div>
+
+            <div class="grid grid-2">
+              <div class="floating">
+                <input placeholder=" " value="Priya">
+                <label>First Name</label>
+              </div>
+              <div class="floating">
+                <input placeholder=" " value="Sharma">
+                <label>Last Name</label>
+              </div>
+              <div class="floating">
+                <input type="email" placeholder=" " value="priya@balaxipharma.in">
+                <label>Work Email</label>
+              </div>
+              <div class="floating">
+                <input type="tel" placeholder=" " value="+91 98765 43210">
+                <label>Phone Number</label>
+              </div>
+              <div class="floating">
+                <input type="date" value="1995-03-12">
+                <label>Date of Birth</label>
+              </div>
+              <div class="floating">
+                <select>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Prefer not to say</option>
+                </select>
+                <label>Gender</label>
+              </div>
+              <div class="floating" style="grid-column:1/-1">
+                <textarea placeholder=" ">Flat 302, Palm Groves, Kharadi, Pune, Maharashtra 411014</textarea>
+                <label>Current Residential Address</label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn primary" onclick="toast('Personal details updated')">Save Personal Info</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Profile Checklist</div>
+            <div class="card-sub" style="margin-bottom:16px">Compliance progress to achieve 100% completion</div>
+
+            <div style="display:flex;flex-direction:column;gap:12px;font-size:12.5px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span>Personal Information</span>
+                <span class="pill success">100% Complete</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span>Employment & Job Title</span>
+                <span class="pill success">Verified by HR</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span>Emergency Contact Info</span>
+                <span class="pill warn">Action Required</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span>Mandatory Documents</span>
+                <span class="pill success">6 / 8 Uploaded</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span>Bank & Statutory PAN</span>
+                <span class="pill success">Verified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: EMPLOYMENT -->
+      <section id="tab-employment" class="tab-panel">
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="card-title">Job & Reporting Structure</div>
+            <div class="card-sub" style="margin-bottom:16px">Official employment master records (Read-Only)</div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px">
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Employee ID</span>
+                <b>EMP-1024</b>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Department</span>
+                <b>Engineering & Product UX</b>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Designation</span>
+                <b>Lead Product Designer</b>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Reporting Manager</span>
+                <b>Rohan Mehta (Engineering Lead)</b>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Date of Joining</span>
+                <b>08 January 2023</b>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span class="muted">Probation Status</span>
+                <span class="pill success">Confirmed Regular</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Workplace Preferences</div>
+            <div class="card-sub" style="margin-bottom:16px">Shift schedules and desk location</div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px">
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Assigned Shift</span>
+                <b>General Shift (09:00 AM – 18:00 PM)</b>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <span class="muted">Office Base</span>
+                <b>Pune Innovation Hub (Tower 4, Desk 412)</b>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span class="muted">Work Mode</span>
+                <span class="pill info">Hybrid (3 Days Office)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: EMERGENCY CONTACT -->
+      <section id="tab-emergency" class="tab-panel">
+        <div class="card" style="max-width:700px">
+          <div class="card-title">Primary Emergency Contact</div>
+          <div class="card-sub" style="margin-bottom:16px">Designated contact person in case of medical or safety emergencies</div>
+
+          <div class="grid grid-2">
+            <div class="floating">
+              <input placeholder=" " value="Rahul Sharma">
+              <label>Contact Person Name</label>
+            </div>
+            <div class="floating">
+              <select>
+                <option>Spouse</option>
+                <option>Parent</option>
+                <option>Sibling</option>
+                <option>Guardian</option>
+              </select>
+              <label>Relationship</label>
+            </div>
+            <div class="floating">
+              <input type="tel" placeholder=" " value="+91 99887 77665">
+              <label>Emergency Phone Number</label>
+            </div>
+            <div class="floating">
+              <input type="email" placeholder=" " value="rahul.sharma@example.com">
+              <label>Emergency Email</label>
+            </div>
+            <div class="floating" style="grid-column:1/-1">
+              <textarea placeholder=" ">Flat 302, Palm Groves, Kharadi, Pune, Maharashtra 411014</textarea>
+              <label>Emergency Address</label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button class="btn primary" onclick="toast('Emergency contact updated — Profile now 100% complete!')">Save Emergency Contact</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: EXPERIENCE & EDUCATION -->
+      <section id="tab-experience" class="tab-panel">
+        <div class="grid grid-2">
+          <!-- Timeline Experience -->
+          <div class="card">
+            <div class="section-head compact">
+              <div>
+                <div class="card-title">Work Experience Timeline</div>
+                <div class="card-sub">Past employment history</div>
+              </div>
+              <button class="btn sm" onclick="toast('Add experience modal opened')">＋ Add Role</button>
+            </div>
+
+            <div class="timeline" style="margin-top:14px">
+              <div class="timeline-item">
+                <b>Lead Formulations Scientist · Balaxi Pharma</b>
+                <p>Jan 2023 — Present · Pune (3 yrs 8 mos)</p>
+              </div>
+              <div class="timeline-item">
+                <b>Senior UX Designer · Pixel Labs</b>
+                <p>Jun 2020 — Dec 2022 · Bengaluru (2 yrs 6 mos)</p>
+              </div>
+              <div class="timeline-item">
+                <b>UI Associate · Studio North</b>
+                <p>Jul 2018 — May 2020 · Mumbai (1 yr 10 mos)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education & Skills -->
+          <div class="card">
+            <div class="card-title">Education & Certifications</div>
+            <div class="card-sub" style="margin-bottom:14px">Academic degrees and professional credentials</div>
+
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px;margin-bottom:18px">
+              <div style="padding-bottom:8px;border-bottom:1px solid var(--border)">
+                <b>Bachelor of Design (B.Des)</b>
+                <p class="muted">National Institute of Design (NID) · 2014 – 2018</p>
+              </div>
+            </div>
+
+            <div class="card-kicker">VERIFIED SKILLS</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+              <span class="pill info">Design Systems</span>
+              <span class="pill info">Figma Enterprise</span>
+              <span class="pill info">User Research</span>
+              <span class="pill info">Information Architecture</span>
+              <span class="pill info">Design Tokens</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: BANK & STATUTORY -->
+      <section id="tab-bank" class="tab-panel">
+        <div class="card" style="max-width:700px">
+          <div class="card-title">Bank & Statutory Tax Information</div>
+          <div class="card-sub" style="margin-bottom:16px">Confidential payroll disbursement details</div>
+
+          <div class="grid grid-2">
+            <div class="floating">
+              <input placeholder=" " value="HDFC Bank" disabled>
+              <label>Bank Name</label>
+            </div>
+            <div class="floating">
+              <input placeholder=" " value="•••• •••• •••• 4912" disabled>
+              <label>Account Number</label>
+            </div>
+            <div class="floating">
+              <input placeholder=" " value="HDFC0000240" disabled>
+              <label>IFSC Code</label>
+            </div>
+            <div class="floating">
+              <input placeholder=" " value="ABCPS1234F" disabled>
+              <label>Permanent Account Number (PAN)</label>
+            </div>
+            <div class="floating">
+              <input placeholder=" " value="100912384912" disabled>
+              <label>Provident Fund UAN</label>
+            </div>
+            <div class="floating">
+              <input placeholder=" " value="New Tax Regime" disabled>
+              <label>Tax Bracket Regime</label>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;padding:12px;background:var(--bg-subtle);border-radius:var(--radius-md);font-size:12px;color:var(--text-muted)">
+            🔒 Bank account changes require HR verification. Please contact People Operations for updates.
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

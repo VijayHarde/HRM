@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Payroll Engine · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="payroll">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search payroll records, tax components…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Payroll Engine</strong>
+      <small>Statutory & Compliance</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>💳</span> HR Administration / Compensation</div>
+          <h1 class="page-title">Payroll Processing & Control Center</h1>
+          <p class="subtitle">Controlled 6-stage lifecycle: calculation, statutory deductions, approvals, and immutable payslip publication.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Payroll variance report generated')">📊 Variance Analysis</button>
+          <button class="btn primary" id="advancePayrollBtn" onclick="advancePayrollStage()">▶ Advance Next Stage</button>
+        </div>
+      </div>
+
+      <!-- Payroll Period Status Bar & Stepper -->
+      <div class="card" style="margin-bottom:22px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div>
+            <span class="card-kicker">ACTIVE PAYROLL PERIOD</span>
+            <h3 style="font-size:18px">August 2026 Payroll Cycle</h3>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="pill warn" id="payrollStatusBadge">Stage 4: Review Ready</span>
+          </div>
+        </div>
+
+        <!-- 6-Step Stepper -->
+        <div class="stepper" id="payrollStepper">
+          <div class="step-item completed" data-step="1">
+            <div class="step-circle">✓</div>
+            <span class="step-label">1. Open Period</span>
+          </div>
+          <div class="step-item completed" data-step="2">
+            <div class="step-circle">✓</div>
+            <span class="step-label">2. Sync Attendance</span>
+          </div>
+          <div class="step-item completed" data-step="3">
+            <div class="step-circle">✓</div>
+            <span class="step-label">3. Calculate</span>
+          </div>
+          <div class="step-item active" data-step="4">
+            <div class="step-circle">4</div>
+            <span class="step-label">4. Review & Validate</span>
+          </div>
+          <div class="step-item" data-step="5">
+            <div class="step-circle">5</div>
+            <span class="step-label">5. Lock & Approve</span>
+          </div>
+          <div class="step-item" data-step="6">
+            <div class="step-circle">6</div>
+            <span class="step-label">6. Publish Payslips</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financial Totals KPI Grid -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Gross Earnings</span>
+            <div class="stat-icon purple">₹</div>
+          </div>
+          <div class="num" style="font-size:26px">₹1.82 Cr</div>
+          <div class="trend"><span>Basic, HRA, Allowances</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Statutory Deductions</span>
+            <div class="stat-icon amber">−</div>
+          </div>
+          <div class="num" style="font-size:26px">₹36.0 Lakh</div>
+          <div class="trend negative"><span>PF, TDS, PTax</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Net Payable Disbursement</span>
+            <div class="stat-icon green">💳</div>
+          </div>
+          <div class="num" style="font-size:26px;color:var(--success)">₹1.46 Cr</div>
+          <div class="trend"><span>248 Employees</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Disbursement Date</span>
+            <div class="stat-icon blue">📅</div>
+          </div>
+          <div class="num" style="font-size:22px">31 Aug 2026</div>
+          <div class="trend"><span>Bank batch auto-generated</span></div>
+        </div>
+      </div>
+
+      <!-- Employee Payroll Register Table -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="padding:18px 22px">
+          <div>
+            <div class="card-title">Employee Salary Breakdown Register</div>
+            <div class="card-sub">August 2026 finalized earnings and deductions</div>
+          </div>
+          <div class="floating" style="margin-bottom:0">
+            <input id="search" placeholder=" " style="height:36px;width:220px">
+            <label>Filter employees</label>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Department</th>
+              <th>Basic Pay</th>
+              <th>HRA / Allowances</th>
+              <th>Gross Pay</th>
+              <th>Deductions (TDS/PF)</th>
+              <th>Net Salary</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">EMP-1024 · Lead Designer</span>
+                  </div>
+                </div>
+              </td>
+              <td>Engineering</td>
+              <td>₹60,000</td>
+              <td>₹60,000</td>
+              <td><b>₹1,20,000</b></td>
+              <td style="color:var(--danger)">− ₹18,000</td>
+              <td style="color:var(--success);font-weight:700">₹1,02,000</td>
+              <td><span class="pill success">Validated</span></td>
+              <td>
+                <button class="btn sm" onclick="toast('Detailed payslip breakdown opened')">Breakdown</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Arjun">
+                  <div>
+                    <b>Arjun Kapoor</b>
+                    <span class="muted">EMP-1025 · Frontend Eng</span>
+                  </div>
+                </div>
+              </td>
+              <td>Engineering</td>
+              <td>₹52,500</td>
+              <td>₹52,500</td>
+              <td><b>₹1,05,000</b></td>
+              <td style="color:var(--danger)">− ₹16,200</td>
+              <td style="color:var(--success);font-weight:700">₹88,800</td>
+              <td><span class="pill success">Validated</span></td>
+              <td>
+                <button class="btn sm" onclick="toast('Detailed payslip breakdown opened')">Breakdown</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Meera">
+                  <div>
+                    <b>Meera Shah</b>
+                    <span class="muted">EMP-1026 · HR Specialist</span>
+                  </div>
+                </div>
+              </td>
+              <td>People Operations</td>
+              <td>₹45,000</td>
+              <td>₹45,000</td>
+              <td><b>₹90,000</b></td>
+              <td style="color:var(--danger)">− ₹13,500</td>
+              <td style="color:var(--success);font-weight:700">₹76,500</td>
+              <td><span class="pill success">Validated</span></td>
+              <td>
+                <button class="btn sm" onclick="toast('Detailed payslip breakdown opened')">Breakdown</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Rohan">
+                  <div>
+                    <b>Rohan Mehta</b>
+                    <span class="muted">EMP-1004 · Engineering Lead</span>
+                  </div>
+                </div>
+              </td>
+              <td>Engineering</td>
+              <td>₹1,10,000</td>
+              <td>₹1,10,000</td>
+              <td><b>₹2,20,000</b></td>
+              <td style="color:var(--danger)">− ₹38,000</td>
+              <td style="color:var(--success);font-weight:700">₹1,82,000</td>
+              <td><span class="pill success">Validated</span></td>
+              <td>
+                <button class="btn sm" onclick="toast('Detailed payslip breakdown opened')">Breakdown</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+let currentStage = 4;
+
+function advancePayrollStage() {
+  if (currentStage === 4) {
+    currentStage = 5;
+    document.querySelector('[data-step="4"]').classList.remove('active');
+    document.querySelector('[data-step="4"]').classList.add('completed');
+    document.querySelector('[data-step="4"] .step-circle').textContent = '✓';
+    
+    document.querySelector('[data-step="5"]').classList.add('active');
+    document.getElementById("payrollStatusBadge").textContent = "Stage 5: Locked & Approved";
+    document.getElementById("payrollStatusBadge").className = "pill info";
+    document.getElementById("advancePayrollBtn").textContent = "🚀 Publish Payslips to Employees";
+    toast("August 2026 payroll locked and approved by HR Director!");
+  } else if (currentStage === 5) {
+    currentStage = 6;
+    document.querySelector('[data-step="5"]').classList.remove('active');
+    document.querySelector('[data-step="5"]').classList.add('completed');
+    document.querySelector('[data-step="5"] .step-circle').textContent = '✓';
+    
+    document.querySelector('[data-step="6"]').classList.add('completed');
+    document.querySelector('[data-step="6"] .step-circle').textContent = '✓';
+    
+    document.getElementById("payrollStatusBadge").textContent = "Stage 6: Published & Disbursed";
+    document.getElementById("payrollStatusBadge").className = "pill success";
+    document.getElementById("advancePayrollBtn").textContent = "✓ Cycle Published";
+    document.getElementById("advancePayrollBtn").disabled = true;
+    toast("Payslips published! Notification emails and self-service access granted to 248 employees.");
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Audit Trail · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="audit-logs">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search audit events, actors, target records…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Compliance Audit</strong>
+      <small>Immutable Ledger</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>🛡</span> Security & Compliance / Audit</div>
+          <h1 class="page-title">Audit Trail & Activity Logs</h1>
+          <p class="subtitle">Complete, immutable record of sensitive HR operations, approvals, and permission modifications.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Audit trail exported as encrypted CSV')">📥 Export CSV</button>
+          <button class="btn primary" onclick="toast('Audit verify check passed: 100% hash integrity')">🛡 Verify Hash Integrity</button>
+        </div>
+      </div>
+
+      <!-- Audit Stats -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Events (30d)</span>
+            <div class="stat-icon purple">🛡</div>
+          </div>
+          <div class="num">1,420</div>
+          <div class="trend"><span>100% verified</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Security Actions</span>
+            <div class="stat-icon blue">🔑</div>
+          </div>
+          <div class="num">84</div>
+          <div class="trend"><span>Logins & MFA</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Payroll / Salary Edits</span>
+            <div class="stat-icon amber">💳</div>
+          </div>
+          <div class="num">16</div>
+          <div class="trend"><span>Locked batch</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Compliance Status</span>
+            <div class="stat-icon green">✓</div>
+          </div>
+          <div class="num" style="font-size:20px;color:var(--success)">SOC-2 / GDPR</div>
+          <div class="trend"><span>Audit ready</span></div>
+        </div>
+      </div>
+
+      <!-- Audit Table -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px">
+          <div>
+            <div class="card-title">Event Ledger</div>
+            <div class="card-sub">Chronological system events captured with actor IP and metadata</div>
+          </div>
+
+          <div style="display:flex;gap:10px">
+            <div class="floating" style="margin-bottom:0">
+              <input id="search" placeholder=" " style="height:36px;width:220px">
+              <label>Filter audit events</label>
+            </div>
+            <select id="actionFilter" style="height:36px;padding:0 10px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:12.5px" onchange="filterAuditAction(this.value)">
+              <option value="all">All Actions</option>
+              <option value="ATTENDANCE">Attendance Events</option>
+              <option value="LEAVE">Leave Decisions</option>
+              <option value="PAYROLL">Payroll Actions</option>
+              <option value="DOC">Document Uploads</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="table" id="auditTable">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Actor</th>
+              <th>Action / Event</th>
+              <th>Target Entity</th>
+              <th>IP / Origin</th>
+              <th>Payload</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-action="ATTENDANCE">
+              <td>
+                <b>09 Sep 2026, 09:14:22</b>
+                <div class="muted">12 mins ago</div>
+              </td>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">Employee (EMP-1024)</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill success">ATTENDANCE_CHECKIN</span></td>
+              <td>AttendanceDaily #ATT-8902</td>
+              <td>192.168.1.104 (Pune VPN)</td>
+              <td>
+                <button class="btn sm" onclick="viewAuditRecord(1)">View JSON</button>
+              </td>
+            </tr>
+
+            <tr data-action="LEAVE">
+              <td>
+                <b>08 Sep 2026, 17:45:10</b>
+                <div class="muted">Yesterday</div>
+              </td>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Rohan">
+                  <div>
+                    <b>Rohan Mehta</b>
+                    <span class="muted">Manager (EMP-1004)</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill info">LEAVE_APPROVE</span></td>
+              <td>LeaveRequest #LR-2044</td>
+              <td>10.0.4.22 (Internal)</td>
+              <td>
+                <button class="btn sm" onclick="viewAuditRecord(2)">View JSON</button>
+              </td>
+            </tr>
+
+            <tr data-action="PAYROLL">
+              <td>
+                <b>08 Sep 2026, 14:20:00</b>
+                <div class="muted">Yesterday</div>
+              </td>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Ananya">
+                  <div>
+                    <b>Ananya Rao</b>
+                    <span class="muted">HR Admin (EMP-0012)</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill purple">PAYROLL_VALIDATE</span></td>
+              <td>PayrollPeriod #PR-AUG26</td>
+              <td>10.0.1.12 (HR Secure VPN)</td>
+              <td>
+                <button class="btn sm" onclick="viewAuditRecord(3)">View JSON</button>
+              </td>
+            </tr>
+
+            <tr data-action="DOC">
+              <td>
+                <b>06 Sep 2026, 11:15:30</b>
+                <div class="muted">3 days ago</div>
+              </td>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">Employee (EMP-1024)</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill warn">DOC_UPLOAD</span></td>
+              <td>Document #DOC-4412</td>
+              <td>192.168.1.104 (Pune VPN)</td>
+              <td>
+                <button class="btn sm" onclick="viewAuditRecord(4)">View JSON</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: JSON Payload Viewer -->
+<div id="jsonModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="card-kicker">AUDIT RECORD DETAILS</div>
+        <h3 id="jsonModalTitle">Event Payload</h3>
+        <p id="jsonModalSub">Cryptographically hashed event metadata.</p>
+      </div>
+      <button class="close" onclick="closeModal('jsonModal')">×</button>
+    </div>
+
+    <pre id="jsonViewer" style="background:#0F172A;color:#38BDF8;padding:16px;border-radius:var(--radius-md);font-family:monospace;font-size:12px;overflow-x:auto;line-height:1.5"></pre>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal('jsonModal')">Close</button>
+      <button class="btn primary" onclick="toast('Payload copied to clipboard')">Copy Raw JSON</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+const AUDIT_DATA = {
+  1: {
+    action: "ATTENDANCE_CHECKIN",
+    actor: "Priya Sharma (EMP-1024)",
+    entity: "AttendanceDaily #ATT-8902",
+    payload: {
+      work_date: "2026-09-09",
+      first_in: "09:14:22",
+      status: "PRESENT",
+      location: "Pune Innovation Hub",
+      biometric_hash: "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  2: {
+    action: "LEAVE_APPROVE",
+    actor: "Rohan Mehta (EMP-1004)",
+    entity: "LeaveRequest #LR-2044",
+    payload: {
+      target_employee: "Arjun Kapoor (EMP-1025)",
+      days: 1,
+      leave_type: "CASUAL",
+      approved_by: "Rohan Mehta",
+      comment: "Approved for urgent travel",
+      balance_remaining: 8
+    }
+  },
+  3: {
+    action: "PAYROLL_VALIDATE",
+    actor: "Ananya Rao (EMP-0012)",
+    entity: "PayrollPeriod #PR-AUG26",
+    payload: {
+      period: "August 2026",
+      gross_total_inr: 18200000,
+      net_total_inr: 14600000,
+      eligible_employee_count: 248,
+      status: "REVIEW_READY",
+      locked_by: null
+    }
+  },
+  4: {
+    action: "DOC_UPLOAD",
+    actor: "Priya Sharma (EMP-1024)",
+    entity: "Document #DOC-4412",
+    payload: {
+      category: "EXPERIENCE_LETTER",
+      filename: "Experience_PixelLabs.pdf",
+      mime: "application/pdf",
+      size_bytes: 798720,
+      verification_status: "PENDING",
+      storage_key: "s3://balaxi-documents/emp-1024/exp-letter-v1.pdf"
+    }
+  }
+};
+
+function viewAuditRecord(id) {
+  const item = AUDIT_DATA[id];
+  if (!item) return;
+  document.getElementById("jsonModalTitle").textContent = item.action + " (" + item.entity + ")";
+  document.getElementById("jsonModalSub").textContent = "Triggered by " + item.actor;
+  document.getElementById("jsonViewer").textContent = JSON.stringify(item.payload, null, 2);
+  openModal("jsonModal");
+}
+
+function filterAuditAction(val) {
+  const rows = document.querySelectorAll("#auditTable tbody tr");
+  rows.forEach(r => {
+    if (val === "all" || r.dataset.action === val) {
+      r.style.display = "";
+    } else {
+      r.style.display = "none";
+    }
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Attendance & Time · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="attendance">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search attendance records, timesheets…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Time & Presence</strong>
+      <small>Automated Timesheets</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>⏱</span> Employee / Time & Attendance</div>
+          <h1 class="page-title">Attendance & Timesheet</h1>
+          <p class="subtitle">Real-time daily punch logs, monthly calendar status, and regularization corrections.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="openModal('regularizeModal')">＋ Regularize Punch</button>
+          <button class="btn primary" onclick="toast('Monthly timesheet exported as PDF')">Export Timesheet</button>
+        </div>
+      </div>
+
+      <!-- Top Section: Punch Card & Today's Summary -->
+      <div class="grid grid-2-1" style="margin-bottom:22px">
+        <!-- Live Punch Clock Card -->
+        <div class="clock-card" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="live-badge"><span class="live-dot"></span> Active Punch · Pune Office</span>
+              <span style="font-size:12px;opacity:0.8">Shift: General (09:00 - 18:00)</span>
+            </div>
+            <div class="clock-timer">09:14 <span style="font-size:20px;opacity:0.8">32</span></div>
+            <div style="font-size:12.5px;color:rgba(255,255,255,0.85);margin-bottom:8px">First In: <b>09:14 AM</b> · Worked: <b>6h 42m</b> so far</div>
+            <div class="progress-bar success"><span style="width:79%"></span></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;opacity:0.8;margin-top:4px">
+              <span>6h 42m elapsed</span>
+              <span>8h 30m target</span>
+            </div>
+          </div>
+
+          <div class="clock-actions">
+            <button class="btn sm danger" onclick="toast('Check-out recorded at ' + new Date().toLocaleTimeString())">Check Out</button>
+            <button class="btn sm" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.2)" onclick="toast('30 min break recorded')">Start Break</button>
+            <button class="btn sm ghost" style="color:#fff" onclick="openModal('regularizeModal')">Request Correction</button>
+          </div>
+        </div>
+
+        <!-- Today Summary Card -->
+        <div class="card">
+          <div class="card-kicker">TODAY'S WORKDAY SNAPSHOT</div>
+          <div class="card-title" style="margin-bottom:12px">Presence Details</div>
+          
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+            <div style="display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--border)">
+              <span class="muted">Check-In Time</span>
+              <b>09:14 AM</b>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--border)">
+              <span class="muted">Expected Working Target</span>
+              <b>8 hours 30 mins</b>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--border)">
+              <span class="muted">Break Time Used</span>
+              <b>34 mins</b>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:6px;border-bottom:1px solid var(--border)">
+              <span class="muted">Location Origin</span>
+              <b>Pune Innovation Hub (Biometric + IP)</b>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:4px">
+              <span class="muted">Status</span>
+              <span class="pill success">Present (On Target)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Stat Tiles -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Present Days (Sep)</span>
+            <div class="stat-icon green">✓</div>
+          </div>
+          <div class="num">18</div>
+          <div class="trend"><span>90% of working days</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Late Check-Ins</span>
+            <div class="stat-icon amber">↗</div>
+          </div>
+          <div class="num">2</div>
+          <div class="trend neutral"><span>Grace period applied</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Hours Worked</span>
+            <div class="stat-icon purple">⏱</div>
+          </div>
+          <div class="num" style="font-size:24px">147h 40m</div>
+          <div class="trend"><span>8h 12m avg/day</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Regularizations</span>
+            <div class="stat-icon blue">📋</div>
+          </div>
+          <div class="num">1 <span style="font-size:13px;color:var(--success);font-weight:700">Approved</span></div>
+          <div class="trend"><span>07 Sep adjusted</span></div>
+        </div>
+      </div>
+
+      <!-- Calendar & Exception Grid -->
+      <div class="grid grid-2-1" style="margin-bottom:22px">
+        <!-- Monthly Calendar Heatmap -->
+        <div class="card">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">September 2026 Calendar</div>
+              <div class="card-sub">Color-coded daily presence summary</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button class="icon-btn" onclick="toast('Previous month')">‹</button>
+              <button class="btn sm">September 2026</button>
+              <button class="icon-btn" onclick="toast('Next month')">›</button>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:16px;margin:10px 0;font-size:11.5px">
+            <span style="display:flex;align-items:center;gap:5px"><i style="width:8px;height:8px;border-radius:50%;background:var(--success);display:inline-block"></i> Present</span>
+            <span style="display:flex;align-items:center;gap:5px"><i style="width:8px;height:8px;border-radius:50%;background:var(--warning);display:inline-block"></i> Late</span>
+            <span style="display:flex;align-items:center;gap:5px"><i style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block"></i> Leave</span>
+            <span style="display:flex;align-items:center;gap:5px"><i style="width:8px;height:8px;border-radius:50%;background:var(--border);display:inline-block"></i> Weekend / Off</span>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="calendar-day-name">MON</div>
+            <div class="calendar-day-name">TUE</div>
+            <div class="calendar-day-name">WED</div>
+            <div class="calendar-day-name">THU</div>
+            <div class="calendar-day-name">FRI</div>
+            <div class="calendar-day-name">SAT</div>
+            <div class="calendar-day-name">SUN</div>
+
+            <div class="calendar-day muted-day"></div>
+            <div class="calendar-day"><span>1</span><i class="present"></i></div>
+            <div class="calendar-day"><span>2</span><i class="present"></i></div>
+            <div class="calendar-day"><span>3</span><i class="present"></i></div>
+            <div class="calendar-day"><span>4</span><i class="present"></i></div>
+            <div class="calendar-day weekend-day"><span>5</span></div>
+            <div class="calendar-day weekend-day"><span>6</span></div>
+
+            <div class="calendar-day"><span>7</span><i class="late"></i></div>
+            <div class="calendar-day"><span>8</span><i class="present"></i></div>
+            <div class="calendar-day today"><span>9</span><i class="present"></i></div>
+            <div class="calendar-day"><span>10</span><i class="present"></i></div>
+            <div class="calendar-day"><span>11</span><i class="present"></i></div>
+            <div class="calendar-day weekend-day"><span>12</span></div>
+            <div class="calendar-day weekend-day"><span>13</span></div>
+
+            <div class="calendar-day"><span>14</span><i class="present"></i></div>
+            <div class="calendar-day"><span>15</span><i class="present"></i></div>
+            <div class="calendar-day"><span>16</span><i class="present"></i></div>
+            <div class="calendar-day"><span>17</span><i class="leave"></i></div>
+            <div class="calendar-day"><span>18</span><i class="present"></i></div>
+            <div class="calendar-day weekend-day"><span>19</span></div>
+            <div class="calendar-day weekend-day"><span>20</span></div>
+
+            <div class="calendar-day"><span>21</span><i class="leave"></i></div>
+            <div class="calendar-day"><span>22</span><i class="leave"></i></div>
+            <div class="calendar-day"><span>23</span><i class="leave"></i></div>
+            <div class="calendar-day"><span>24</span><i class="present"></i></div>
+            <div class="calendar-day"><span>25</span><i class="present"></i></div>
+            <div class="calendar-day weekend-day"><span>26</span></div>
+            <div class="calendar-day weekend-day"><span>27</span></div>
+
+            <div class="calendar-day"><span>28</span><i class="present"></i></div>
+            <div class="calendar-day"><span>29</span><i class="present"></i></div>
+            <div class="calendar-day"><span>30</span><i class="present"></i></div>
+            <div class="calendar-day muted-day"></div>
+            <div class="calendar-day muted-day"></div>
+            <div class="calendar-day muted-day"></div>
+            <div class="calendar-day muted-day"></div>
+          </div>
+        </div>
+
+        <!-- Hours & Overtime Snapshot -->
+        <div class="card">
+          <div class="card-kicker">MONTHLY ACCRUAL</div>
+          <div class="card-title">Hours Breakdown</div>
+          
+          <div style="margin:16px 0">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:12.5px">
+              <span>Regular Work Hours</span>
+              <b>147h 40m</b>
+            </div>
+            <div class="progress-bar"><span style="width:87%"></span></div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:12.5px">
+            <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+              <span class="muted">Overtime Logged</span>
+              <b>+8h 20m</b>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+              <span class="muted">Late Penalty Deductions</span>
+              <b>0m (Waived)</b>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)">
+              <span class="muted">Average Log-In Time</span>
+              <b>09:11 AM</b>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;padding:12px;background:var(--bg-subtle);border-radius:var(--radius-md);border:1px solid var(--border)">
+            <b style="font-size:12.5px;display:block">Regularization Policy</b>
+            <p class="muted" style="font-size:11.5px;margin-top:2px">Up to 3 regularization requests permitted per month without salary penalty.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Attendance Table -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="padding:18px 22px">
+          <div>
+            <div class="card-title">Recent Working Day Logs</div>
+            <div class="card-sub">Detailed in/out events and punch sources</div>
+          </div>
+          <div class="floating" style="margin-bottom:0">
+            <input id="search" placeholder=" " style="height:36px;width:220px">
+            <label>Filter records</label>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Check In</th>
+              <th>Check Out</th>
+              <th>Effective Hours</th>
+              <th>Location</th>
+              <th>Punch Source</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>09 Sep 2026</b> <div class="muted">Today</div></td>
+              <td>09:14 AM</td>
+              <td>—</td>
+              <td>6h 42m</td>
+              <td>Pune Innovation Hub</td>
+              <td>Biometric Punch</td>
+              <td><span class="pill success">Present</span></td>
+            </tr>
+            <tr>
+              <td><b>08 Sep 2026</b></td>
+              <td>09:03 AM</td>
+              <td>18:02 PM</td>
+              <td>8h 59m</td>
+              <td>Pune Innovation Hub</td>
+              <td>Biometric Punch</td>
+              <td><span class="pill success">Present</span></td>
+            </tr>
+            <tr>
+              <td><b>07 Sep 2026</b></td>
+              <td>09:47 AM</td>
+              <td>18:01 PM</td>
+              <td>8h 14m</td>
+              <td>Remote (Home)</td>
+              <td>Web Clock (Regularized)</td>
+              <td><span class="pill warn">Adjusted</span></td>
+            </tr>
+            <tr>
+              <td><b>04 Sep 2026</b></td>
+              <td>08:58 AM</td>
+              <td>17:46 PM</td>
+              <td>8h 48m</td>
+              <td>Pune Innovation Hub</td>
+              <td>Biometric Punch</td>
+              <td><span class="pill success">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Regularize Attendance -->
+<div id="regularizeModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="card-kicker">PUNCH ADJUSTMENT</div>
+        <h3>Regularize Attendance</h3>
+        <p>Submit a request to correct missed check-ins or biometric sync issues.</p>
+      </div>
+      <button class="close" onclick="closeModal('regularizeModal')">×</button>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="floating">
+        <input type="date" value="2026-09-07" required>
+        <label>Attendance Date</label>
+      </div>
+
+      <div class="floating">
+        <select>
+          <option>Missed Check-in Punch</option>
+          <option>Missed Check-out Punch</option>
+          <option>Biometric Device Failure</option>
+          <option>On-Duty / Client Visit</option>
+        </select>
+        <label>Reason Category</label>
+      </div>
+
+      <div class="floating">
+        <input type="time" value="09:15">
+        <label>Actual In Time</label>
+      </div>
+
+      <div class="floating">
+        <input type="time" value="18:00">
+        <label>Actual Out Time</label>
+      </div>
+
+      <div class="floating" style="grid-column:1/-1">
+        <textarea placeholder=" "></textarea>
+        <label>Explanation / Manager Notes</label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal('regularizeModal')">Cancel</button>
+      <button class="btn primary" onclick="closeModal('regularizeModal');toast('Regularization request sent to manager for approval')">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

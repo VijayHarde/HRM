@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Leave & Time Off · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="leave">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search leave records, policy details…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Time Off Engine</strong>
+      <small>Accruals & Entitlements</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>📅</span> Employee / Time Off</div>
+          <h1 class="page-title">Leave & Time Off</h1>
+          <p class="subtitle">Plan vacations, view accrued leave balances, and track manager approval statuses.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="go('holidays')">🎉 Holiday Calendar</button>
+          <button class="btn primary" onclick="openModal('leaveModal')">＋ Apply for Leave</button>
+        </div>
+      </div>
+
+      <!-- Leave Balance Tiles -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat" style="background:linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #1D4ED8 100%);color:#FFFFFF;border:1px solid rgba(255,255,255,0.1)">
+          <div class="stat-head">
+            <span class="label" style="color:rgba(255,255,255,0.85)">Total Available</span>
+            <span style="font-size:20px">🌴</span>
+          </div>
+          <div class="num" style="color:#FFFFFF" id="totalLeaveBalance">27 <span style="font-size:14px;font-weight:500;opacity:0.9">days</span></div>
+          <div class="trend" style="color:rgba(255,255,255,0.9)"><span>64% remaining</span> · 42 Total</div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Annual Leave (Paid)</span>
+            <div class="stat-icon purple">AL</div>
+          </div>
+          <div class="num">12 <span style="font-size:14px;color:var(--text-muted);font-weight:500">days</span></div>
+          <div class="progress-bar" style="margin-top:6px"><span style="width:66%"></span></div>
+          <small class="muted" style="margin-top:6px;display:block">6 used · 18 total</small>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Sick & Medical Leave</span>
+            <div class="stat-icon green">SL</div>
+          </div>
+          <div class="num">8 <span style="font-size:14px;color:var(--text-muted);font-weight:500">days</span></div>
+          <div class="progress-bar success" style="margin-top:6px"><span style="width:66%"></span></div>
+          <small class="muted" style="margin-top:6px;display:block">4 used · 12 total</small>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Casual / Personal</span>
+            <div class="stat-icon amber">CL</div>
+          </div>
+          <div class="num">7 <span style="font-size:14px;color:var(--text-muted);font-weight:500">days</span></div>
+          <div class="progress-bar amber" style="margin-top:6px"><span style="width:58%"></span></div>
+          <small class="muted" style="margin-top:6px;display:block">5 used · 12 total</small>
+        </div>
+      </div>
+
+      <!-- Grid: Usage Breakdown + Upcoming Out of Office -->
+      <div class="grid grid-2" style="margin-bottom:22px">
+        <!-- Usage Card -->
+        <div class="card">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">Leave Accrual & Utilization</div>
+              <div class="card-sub">Financial Year FY 2026–27 (Apr 2026 – Mar 2027)</div>
+            </div>
+            <span class="pill info">FY 26–27</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:24px;margin-top:14px">
+            <div style="width:110px;height:110px;border-radius:50%;border:10px solid var(--primary-light);border-top-color:var(--primary);border-right-color:var(--accent);display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <b style="font-size:22px">15</b>
+              <span class="muted" style="font-size:10px">DAYS USED</span>
+            </div>
+
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+              <div style="display:flex;justify-content:space-between">
+                <span><i style="width:8px;height:8px;border-radius:50%;background:var(--primary);display:inline-block"></i> Annual Leave</span>
+                <b>6 days</b>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span><i style="width:8px;height:8px;border-radius:50%;background:var(--success);display:inline-block"></i> Sick Leave</span>
+                <b>4 days</b>
+              </div>
+              <div style="display:flex;justify-content:space-between">
+                <span><i style="width:8px;height:8px;border-radius:50%;background:var(--warning);display:inline-block"></i> Casual Leave</span>
+                <b>5 days</b>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding-top:6px;border-top:1px solid var(--border)">
+                <span class="muted">Carry-Forward Limit</span>
+                <b>Max 15 days into FY 27–28</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming Planned Leaves -->
+        <div class="card">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">Upcoming Out of Office</div>
+              <div class="card-sub">Scheduled vacations and approved leaves</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-subtle)">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="background:var(--primary-light);color:var(--primary);padding:6px 10px;border-radius:var(--radius-md);text-align:center">
+                  <b style="font-size:14px;display:block">21</b>
+                  <small style="font-size:9px">SEP</small>
+                </div>
+                <div>
+                  <b style="font-size:13px">Annual Leave (3 days)</b>
+                  <p class="muted" style="font-size:11.5px">21–23 Sep 2026 · Family travel</p>
+                </div>
+              </div>
+              <span class="pill warn">Pending Review</span>
+            </div>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-subtle)">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="background:var(--success-light);color:var(--success);padding:6px 10px;border-radius:var(--radius-md);text-align:center">
+                  <b style="font-size:14px;display:block">14</b>
+                  <small style="font-size:9px">OCT</small>
+                </div>
+                <div>
+                  <b style="font-size:13px">Casual Leave (1 day)</b>
+                  <p class="muted" style="font-size:11.5px">14 Oct 2026 · Personal work</p>
+                </div>
+              </div>
+              <span class="pill success">Approved</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leave Requests History Table -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="padding:18px 22px">
+          <div>
+            <div class="card-title">Leave Applications History</div>
+            <div class="card-sub">All past and ongoing time off requests</div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <span class="filter-chip active-filter">All</span>
+            <span class="filter-chip">Approved</span>
+            <span class="filter-chip">Pending</span>
+          </div>
+        </div>
+
+        <table class="table" id="leaveHistoryTable">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Type</th>
+              <th>Working Days</th>
+              <th>Reason</th>
+              <th>Approver</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <b>21–23 Sep 2026</b>
+                <div class="muted">Submitted 05 Sep</div>
+              </td>
+              <td><span class="pill purple">Annual</span></td>
+              <td><b>3 days</b></td>
+              <td>Family travel</td>
+              <td>Rohan Mehta</td>
+              <td><span class="pill warn">Pending</span></td>
+              <td><button class="btn sm danger" onclick="toast('Leave request withdrawn');this.closest('tr').remove()">Cancel</button></td>
+            </tr>
+
+            <tr>
+              <td>
+                <b>14 Aug 2026</b>
+                <div class="muted">Submitted 11 Aug</div>
+              </td>
+              <td><span class="pill success">Sick</span></td>
+              <td><b>1 day</b></td>
+              <td>Medical rest</td>
+              <td>Rohan Mehta</td>
+              <td><span class="pill success">Approved</span></td>
+              <td><button class="btn sm" onclick="toast('Viewing request log')">Details</button></td>
+            </tr>
+
+            <tr>
+              <td>
+                <b>02–03 Jul 2026</b>
+                <div class="muted">Submitted 28 Jun</div>
+              </td>
+              <td><span class="pill amber">Casual</span></td>
+              <td><b>2 days</b></td>
+              <td>Personal work</td>
+              <td>Rohan Mehta</td>
+              <td><span class="pill success">Approved</span></td>
+              <td><button class="btn sm" onclick="toast('Viewing request log')">Details</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Apply Leave -->
+<div id="leaveModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="card-kicker">TIME OFF APPLICATION</div>
+        <h3>Apply for Leave</h3>
+        <p>Submit request for manager approval. Working days are auto-deducted.</p>
+      </div>
+      <button class="close" onclick="closeModal('leaveModal')">×</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); submitLeaveApplication();">
+      <div class="grid grid-2">
+        <div class="floating">
+          <select id="leaveTypeSelect">
+            <option value="Annual Leave">Annual Leave · 12 days available</option>
+            <option value="Casual Leave">Casual Leave · 7 days available</option>
+            <option value="Sick Leave">Sick Leave · 8 days available</option>
+            <option value="Floating Festival">Floating Festival · 2 days available</option>
+          </select>
+          <label>Leave Type</label>
+        </div>
+
+        <div class="floating">
+          <select id="leaveDurationSelect">
+            <option value="Full Day">Full Day</option>
+            <option value="First Half">First Half (Half Day)</option>
+            <option value="Second Half">Second Half (Half Day)</option>
+          </select>
+          <label>Day Type</label>
+        </div>
+
+        <div class="floating">
+          <input type="date" id="leaveFromDate" value="2026-10-15" required onchange="calculateLeaveDays()">
+          <label>From Date</label>
+        </div>
+
+        <div class="floating">
+          <input type="date" id="leaveToDate" value="2026-10-16" required onchange="calculateLeaveDays()">
+          <label>To Date</label>
+        </div>
+
+        <div class="form-helper" id="leaveCalcHelper">
+          <b>2 working days</b> will be deducted from your leave balance.
+        </div>
+
+        <div class="floating" style="grid-column:1/-1">
+          <textarea id="leaveReason" placeholder=" " required></textarea>
+          <label>Reason for Leave</label>
+        </div>
+
+        <div class="floating">
+          <input type="text" placeholder=" " value="Arjun Kapoor">
+          <label>Handover To / Point of Contact</label>
+        </div>
+
+        <div class="floating">
+          <input type="text" placeholder=" " value="+91 98765 43210">
+          <label>Emergency Contact During Leave</label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn" onclick="closeModal('leaveModal')">Cancel</button>
+        <button type="submit" class="btn primary">Submit Leave Application</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+function calculateLeaveDays() {
+  const f = document.getElementById("leaveFromDate").value;
+  const t = document.getElementById("leaveToDate").value;
+  if (!f || !t) return;
+  
+  const d1 = new Date(f);
+  const d2 = new Date(t);
+  let days = 0;
+  let cur = new Date(d1);
+  while (cur <= d2) {
+    const day = cur.getDay();
+    if (day !== 0 && day !== 6) days++; // Skip weekends
+    cur.setDate(cur.getDate() + 1);
+  }
+  if (days < 1) days = 1;
+  document.getElementById("leaveCalcHelper").innerHTML = `<b>${days} working days</b> will be deducted from your balance.`;
+}
+
+function submitLeaveApplication() {
+  const type = document.getElementById("leaveTypeSelect").value;
+  const from = document.getElementById("leaveFromDate").value;
+  const to = document.getElementById("leaveToDate").value;
+  const reason = document.getElementById("leaveReason").value || "Personal work";
+  
+  closeModal("leaveModal");
+  toast(`Leave request (${type}: ${from} to ${to}) submitted to Manager Rohan Mehta!`);
+  
+  // Prepend to table
+  const tbody = document.querySelector("#leaveHistoryTable tbody");
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><b>${from} to ${to}</b><div class="muted">Submitted Just now</div></td>
+    <td><span class="pill purple">${type.split(' ')[0]}</span></td>
+    <td><b>2 days</b></td>
+    <td>${reason}</td>
+    <td>Rohan Mehta</td>
+    <td><span class="pill warn">Pending</span></td>
+    <td><button class="btn sm danger" onclick="toast('Leave cancelled');this.closest('tr').remove()">Cancel</button></td>
+  `;
+  tbody.insertBefore(tr, tbody.firstChild);
+}
+</script>
+</body>
+</html>

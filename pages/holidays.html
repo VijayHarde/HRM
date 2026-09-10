@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Holiday Calendar 2026 · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="holidays">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search holidays, festivals, dates…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Company Calendar</strong>
+      <small>Holidays & Observances</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>🎉</span> Calendar / Company Holidays</div>
+          <h1 class="page-title">Company Holiday Calendar 2026</h1>
+          <p class="subtitle">Official declared holidays, optional festival leaves, and regional office calendars.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Holiday calendar synced with Google / Outlook calendar')">📅 Sync with Outlook</button>
+          <button class="btn primary" onclick="go('leave')">＋ Apply Leave</button>
+        </div>
+      </div>
+
+      <!-- Upcoming Holiday Hero Banner -->
+      <div class="card card-gradient-hero" style="margin-bottom:22px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF;margin-bottom:8px">NEXT UPCOMING HOLIDAY</span>
+          <h2 style="font-size:26px;color:#FFFFFF">Mahatma Gandhi Jayanti</h2>
+          <p style="color:rgba(255,255,255,0.85);font-size:13.5px">Friday, 02 October 2026 · Long weekend across all Indian offices</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.15);padding:16px 24px;border-radius:var(--radius-lg);text-align:center;backdrop-filter:blur(6px)">
+          <div style="font-size:32px;font-weight:800;color:#FFFFFF">23</div>
+          <small style="color:rgba(255,255,255,0.85);font-weight:600">DAYS REMAINING</small>
+        </div>
+      </div>
+
+      <!-- Holiday Grid -->
+      <div class="grid grid-3">
+        <!-- Q3 & Q4 Holidays -->
+        <div class="card">
+          <div class="stat-head">
+            <span class="card-kicker">OCTOBER 2026</span>
+            <span class="pill success">Mandatory</span>
+          </div>
+          <h3 style="margin:6px 0 4px;font-size:16px">Gandhi Jayanti</h3>
+          <div class="muted">Friday · 02 Oct 2026</div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px">National holiday observed across all office locations.</p>
+        </div>
+
+        <div class="card">
+          <div class="stat-head">
+            <span class="card-kicker">OCTOBER 2026</span>
+            <span class="pill purple">Festival</span>
+          </div>
+          <h3 style="margin:6px 0 4px;font-size:16px">Dussehra (Vijayadashami)</h3>
+          <div class="muted">Tuesday · 20 Oct 2026</div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px">Celebration of victory of good over evil.</p>
+        </div>
+
+        <div class="card">
+          <div class="stat-head">
+            <span class="card-kicker">NOVEMBER 2026</span>
+            <span class="pill purple">Festival</span>
+          </div>
+          <h3 style="margin:6px 0 4px;font-size:16px">Diwali (Deepavali)</h3>
+          <div class="muted">Thursday–Friday · 12–13 Nov 2026</div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px">2 days national festival holiday.</p>
+        </div>
+
+        <div class="card">
+          <div class="stat-head">
+            <span class="card-kicker">NOVEMBER 2026</span>
+            <span class="pill success">Mandatory</span>
+          </div>
+          <h3 style="margin:6px 0 4px;font-size:16px">Guru Nanak Jayanti</h3>
+          <div class="muted">Monday · 30 Nov 2026</div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px">Official holiday for north and west regional offices.</p>
+        </div>
+
+        <div class="card">
+          <div class="stat-head">
+            <span class="card-kicker">DECEMBER 2026</span>
+            <span class="pill success">Mandatory</span>
+          </div>
+          <h3 style="margin:6px 0 4px;font-size:16px">Christmas Day</h3>
+          <div class="muted">Friday · 25 Dec 2026</div>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:10px">Winter holiday across global operations.</p>
+        </div>
+
+        <div class="card" style="background:var(--bg-subtle);border-style:dashed;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+          <div style="font-size:26px;margin-bottom:6px">📅</div>
+          <b style="font-size:14px">Floating Festival Leaves</b>
+          <p class="muted" style="font-size:11.5px;max-width:220px;margin-top:4px">You have <b>2 optional floating leaves</b> available to apply this calendar year.</p>
+          <button class="btn sm primary" style="margin-top:12px" onclick="go('leave')">Apply Floating Leave</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

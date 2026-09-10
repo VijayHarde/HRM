@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Approvals Hub · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="approvals">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search approvals by employee or request type…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Approvals Center</strong>
+      <small>Decision routing & audit trail</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>✓</span> Management / Decision Hub</div>
+          <h1 class="page-title">Approvals Hub</h1>
+          <p class="subtitle">Unified inbox for team leave applications, attendance regularization, and document validations.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('All pending requests re-synced')">↻ Sync</button>
+          <button class="btn primary" onclick="approveAll()">✓ Approve All Visible</button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Pending</span>
+            <div class="stat-icon amber">⏳</div>
+          </div>
+          <div class="num" id="totalPendingCount">4</div>
+          <div class="trend negative"><span>Requires action</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Leave Requests</span>
+            <div class="stat-icon purple">📅</div>
+          </div>
+          <div class="num">2</div>
+          <div class="trend"><span>Annual & Casual</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Regularizations</span>
+            <div class="stat-icon green">⏱</div>
+          </div>
+          <div class="num">1</div>
+          <div class="trend"><span>Missed Punch</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Document Verifications</span>
+            <div class="stat-icon blue">📁</div>
+          </div>
+          <div class="num">1</div>
+          <div class="trend"><span>Experience Letter</span></div>
+        </div>
+      </div>
+
+      <!-- Tabs & Search Filter -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="display:flex;justify-content:space-between;align-items:center;padding:18px 22px">
+          <div class="tabs" id="approvalTabs" style="margin-bottom:0;border-bottom:none">
+            <button class="active" onclick="filterApprovals('all', this)">All (4)</button>
+            <button onclick="filterApprovals('leave', this)">Leave (2)</button>
+            <button onclick="filterApprovals('attendance', this)">Attendance (1)</button>
+            <button onclick="filterApprovals('document', this)">Documents (1)</button>
+          </div>
+          
+          <div style="width:240px">
+            <input id="search" placeholder="Filter requests…" style="width:100%;height:36px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius-md);font-size:12.5px">
+          </div>
+        </div>
+
+        <table class="table" id="approvalsTable">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Category</th>
+              <th>Request Details</th>
+              <th>Submitted</th>
+              <th>Supporting Data</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1: Priya Leave -->
+            <tr data-cat="leave">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">EMP-1024 · Product Design</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill purple">Annual Leave</span></td>
+              <td>
+                <b>21–23 Sep 2026 (3 working days)</b>
+                <div class="muted">Reason: Family travel and personal commitments</div>
+              </td>
+              <td>05 Sep 2026</td>
+              <td>
+                <span style="font-size:11.5px;color:var(--text-muted)">Balance: <b>27 days</b> (Sufficient)</span>
+              </td>
+              <td style="text-align:right">
+                <div style="display:flex;justify-content:flex-end;gap:6px">
+                  <button class="btn sm primary" onclick="openDecisionModal('Priya Sharma', 'Annual Leave (21-23 Sep)', 'approve', this)">Approve</button>
+                  <button class="btn sm danger" onclick="openDecisionModal('Priya Sharma', 'Annual Leave (21-23 Sep)', 'reject', this)">Reject</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 2: Arjun Attendance -->
+            <tr data-cat="attendance">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Arjun">
+                  <div>
+                    <b>Arjun Kapoor</b>
+                    <span class="muted">EMP-1025 · Frontend Eng</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill warn">Attendance Fix</span></td>
+              <td>
+                <b>07 Sep 2026 · Missed Check-in</b>
+                <div class="muted">Correction: 09:15 AM check-in, 18:00 PM check-out</div>
+              </td>
+              <td>08 Sep 2026</td>
+              <td>
+                <span style="font-size:11.5px;color:var(--text-muted)">Shift: 8h 30m target</span>
+              </td>
+              <td style="text-align:right">
+                <div style="display:flex;justify-content:flex-end;gap:6px">
+                  <button class="btn sm primary" onclick="openDecisionModal('Arjun Kapoor', 'Attendance Fix (07 Sep)', 'approve', this)">Approve</button>
+                  <button class="btn sm danger" onclick="openDecisionModal('Arjun Kapoor', 'Attendance Fix (07 Sep)', 'reject', this)">Reject</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 3: Meera Leave -->
+            <tr data-cat="leave">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Meera">
+                  <div>
+                    <b>Meera Shah</b>
+                    <span class="muted">EMP-1026 · UX Research</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill purple">Casual Leave</span></td>
+              <td>
+                <b>18 Sep 2026 (1 working day)</b>
+                <div class="muted">Reason: Urgent household relocation work</div>
+              </td>
+              <td>07 Sep 2026</td>
+              <td>
+                <span style="font-size:11.5px;color:var(--text-muted)">Balance: <b>7 days</b> (Sufficient)</span>
+              </td>
+              <td style="text-align:right">
+                <div style="display:flex;justify-content:flex-end;gap:6px">
+                  <button class="btn sm primary" onclick="openDecisionModal('Meera Shah', 'Casual Leave (18 Sep)', 'approve', this)">Approve</button>
+                  <button class="btn sm danger" onclick="openDecisionModal('Meera Shah', 'Casual Leave (18 Sep)', 'reject', this)">Reject</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 4: Document Verification -->
+            <tr data-cat="document">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">EMP-1024 · Product Design</span>
+                  </div>
+                </div>
+              </td>
+              <td><span class="pill info">Document</span></td>
+              <td>
+                <b>Experience Letter · Previous Employer</b>
+                <div class="muted">PDF · 780 KB · Uploaded 06 Sep</div>
+              </td>
+              <td>06 Sep 2026</td>
+              <td>
+                <button class="btn sm" onclick="toast('Viewing document preview')">👁 Preview File</button>
+              </td>
+              <td style="text-align:right">
+                <div style="display:flex;justify-content:flex-end;gap:6px">
+                  <button class="btn sm primary" onclick="openDecisionModal('Priya Sharma', 'Experience Letter Verification', 'approve', this)">Verify</button>
+                  <button class="btn sm danger" onclick="openDecisionModal('Priya Sharma', 'Experience Letter Verification', 'reject', this)">Reject</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Decision Comment Modal -->
+<div id="decisionModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="card-kicker" id="decisionActionKicker">APPROVE REQUEST</div>
+        <h3 id="decisionTitle">Confirm Approval</h3>
+        <p id="decisionSub">Provide optional reviewer feedback.</p>
+      </div>
+      <button class="close" onclick="closeModal('decisionModal')">×</button>
+    </div>
+
+    <div class="floating">
+      <textarea id="decisionComments" placeholder=" "></textarea>
+      <label>Reviewer Comments / Audit Notes</label>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal('decisionModal')">Cancel</button>
+      <button class="btn primary" id="confirmDecisionBtn">Confirm Decision</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+let currentTargetRow = null;
+
+function filterApprovals(type, btn) {
+  document.querySelectorAll("#approvalTabs button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  
+  const rows = document.querySelectorAll("#approvalsTable tbody tr");
+  rows.forEach(r => {
+    if (type === "all" || r.dataset.cat === type) {
+      r.style.display = "";
+    } else {
+      r.style.display = "none";
+    }
+  });
+}
+
+function openDecisionModal(person, item, action, btn) {
+  currentTargetRow = btn.closest("tr");
+  const isApprove = action === "approve";
+  
+  document.getElementById("decisionActionKicker").textContent = isApprove ? "APPROVE REQUEST" : "REJECT REQUEST";
+  document.getElementById("decisionTitle").textContent = (isApprove ? "Approve " : "Reject ") + item;
+  document.getElementById("decisionSub").textContent = `Decision for ${person}. This action will notify the employee.`;
+  
+  const confirmBtn = document.getElementById("confirmDecisionBtn");
+  confirmBtn.className = isApprove ? "btn primary" : "btn danger";
+  confirmBtn.textContent = isApprove ? "Confirm Approval" : "Confirm Rejection";
+  
+  confirmBtn.onclick = () => {
+    closeModal("decisionModal");
+    if (currentTargetRow) {
+      currentTargetRow.style.transition = "all 0.3s ease";
+      currentTargetRow.style.opacity = "0";
+      setTimeout(() => {
+        currentTargetRow.remove();
+        updatePendingCount();
+        toast(`${isApprove ? 'Approved' : 'Rejected'} request for ${person}`);
+      }, 300);
+    }
+  };
+  
+  openModal("decisionModal");
+}
+
+function updatePendingCount() {
+  const count = document.querySelectorAll("#approvalsTable tbody tr").length;
+  document.getElementById("totalPendingCount").textContent = count;
+}
+
+function approveAll() {
+  const rows = document.querySelectorAll("#approvalsTable tbody tr");
+  if (rows.length === 0) {
+    toast("No pending items to approve");
+    return;
+  }
+  rows.forEach(r => r.remove());
+  updatePendingCount();
+  toast("All visible requests approved and notifications dispatched!");
+}
+</script>
+</body>
+</html>

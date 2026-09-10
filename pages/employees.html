@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Employee Directory · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="employees">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search employees by name, role, email…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Workforce Directory</strong>
+      <small>248 Active Personnel</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>👥</span> Workforce / Employee Management</div>
+          <h1 class="page-title">Employee Directory</h1>
+          <p class="subtitle">Complete workforce master data, reporting hierarchy, and employee profiles.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Employee directory exported as CSV')">📥 Export Directory</button>
+          <button class="btn primary" onclick="go('employee-add')">＋ Onboard New Employee</button>
+        </div>
+      </div>
+
+      <!-- Filters Toolbar -->
+      <div class="card" style="margin-bottom:20px;padding:16px 20px">
+        <div class="grid grid-3">
+          <div class="floating" style="margin-bottom:0">
+            <input id="search" placeholder=" ">
+            <label>Search by Name or ID</label>
+          </div>
+
+          <div class="floating" style="margin-bottom:0">
+            <select id="deptFilter" onchange="filterDept(this.value)">
+              <option value="all">All Departments (6)</option>
+              <option value="Engineering">Engineering & Technology</option>
+              <option value="Product">Product & UX Design</option>
+              <option value="People">People Operations</option>
+              <option value="Finance">Finance & Legal</option>
+            </select>
+            <label>Filter Department</label>
+          </div>
+
+          <div class="floating" style="margin-bottom:0">
+            <select id="statusFilter" onchange="filterStatus(this.value)">
+              <option value="all">All Statuses</option>
+              <option value="Active">Active</option>
+              <option value="On Leave">On Leave</option>
+              <option value="Notice">In Notice Period</option>
+            </select>
+            <label>Employment Status</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Employees Table -->
+      <div class="card table-wrap">
+        <table class="table" id="employeesTable">
+          <thead>
+            <tr>
+              <th>Employee Name & Code</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>Reporting Manager</th>
+              <th>Joining Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-dept="Product" data-status="Active">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">EMP-1024 · priya@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Product & UX</td>
+              <td>Lead Product Designer</td>
+              <td>Rohan Mehta</td>
+              <td>08 Jan 2023</td>
+              <td><span class="pill success">Active</span></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="go('profile')">Profile</button>
+                  <button class="btn sm" onclick="toast('Permissions editor opened')">Edit</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-dept="Engineering" data-status="Active">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Arjun">
+                  <div>
+                    <b>Arjun Kapoor</b>
+                    <span class="muted">EMP-1025 · arjun@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Engineering</td>
+              <td>Senior Frontend Engineer</td>
+              <td>Rohan Mehta</td>
+              <td>15 Mar 2023</td>
+              <td><span class="pill success">Active</span></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="toast('Viewing profile for Arjun Kapoor')">Profile</button>
+                  <button class="btn sm" onclick="toast('Permissions editor opened')">Edit</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-dept="People" data-status="On Leave">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Meera">
+                  <div>
+                    <b>Meera Shah</b>
+                    <span class="muted">EMP-1026 · meera@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>People Operations</td>
+              <td>Senior HR Specialist</td>
+              <td>Ananya Rao</td>
+              <td>01 Jun 2024</td>
+              <td><span class="pill warn">On Leave</span></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="toast('Viewing profile for Meera Shah')">Profile</button>
+                  <button class="btn sm" onclick="toast('Permissions editor opened')">Edit</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-dept="Engineering" data-status="Active">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Rohan">
+                  <div>
+                    <b>Rohan Mehta</b>
+                    <span class="muted">EMP-1004 · rohan@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Engineering</td>
+              <td>Engineering Lead</td>
+              <td>Vikramaditya S.</td>
+              <td>10 Feb 2022</td>
+              <td><span class="pill success">Active</span></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="toast('Viewing profile for Rohan Mehta')">Profile</button>
+                  <button class="btn sm" onclick="toast('Permissions editor opened')">Edit</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr data-dept="Engineering" data-status="Notice">
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Vikram">
+                  <div>
+                    <b>Vikram Nair</b>
+                    <span class="muted">EMP-1011 · vikram@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Engineering</td>
+              <td>Senior Backend Engineer</td>
+              <td>Rohan Mehta</td>
+              <td>14 Jul 2021</td>
+              <td><span class="pill danger">In Notice</span></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm danger" onclick="go('offboarding')">Offboard</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+function filterDept(dept) {
+  const rows = document.querySelectorAll("#employeesTable tbody tr");
+  rows.forEach(r => {
+    if (dept === "all" || r.dataset.dept === dept) {
+      r.style.display = "";
+    } else {
+      r.style.display = "none";
+    }
+  });
+}
+
+function filterStatus(st) {
+  const rows = document.querySelectorAll("#employeesTable tbody tr");
+  rows.forEach(r => {
+    if (st === "all" || r.dataset.status === st) {
+      r.style.display = "";
+    } else {
+      r.style.display = "none";
+    }
+  });
+}
+</script>
+</body>
+</html>

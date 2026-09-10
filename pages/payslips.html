@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Payslips · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="payslips">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search historical payslips, tax sheets…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Compensation Vault</strong>
+      <small>Secure Salary Statements</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>💳</span> Employee / Compensation</div>
+          <h1 class="page-title">My Payslips & Tax Statements</h1>
+          <p class="subtitle">Secure, confidential access to your monthly salary statements, tax deductions, and YTD earnings.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('Annual Tax Computation Sheet (Form 16 preview) generated')">📄 Tax Sheet (Form 16)</button>
+          <button class="btn primary" onclick="openModal('payslipModal')">📥 Download Latest Payslip</button>
+        </div>
+      </div>
+
+      <!-- Hero Salary Card -->
+      <div class="grid grid-1-2" style="margin-bottom:22px">
+        <!-- Net Pay Hero -->
+        <div class="card card-gradient-hero" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <span class="pill" style="background:rgba(255,255,255,0.2);color:#FFFFFF;margin-bottom:12px">
+              LATEST DISBURSEMENT · AUGUST 2026
+            </span>
+            <span class="card-kicker" style="color:rgba(255,255,255,0.8)">Net Credited Salary</span>
+            <div style="font-size:38px;font-weight:800;color:#FFFFFF;letter-spacing:-0.03em;margin:4px 0 8px">
+              ₹1,02,000
+            </div>
+            <p style="color:rgba(255,255,255,0.85);font-size:12.5px">
+              Direct deposit credited to HDFC Bank (A/C ending in •••• 4912) on <b>31 Aug 2026</b>.
+            </p>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:20px">
+            <button class="btn" style="background:#FFFFFF;color:var(--primary);font-weight:700" onclick="openModal('payslipModal')">👁 View Statement</button>
+            <button class="btn ghost" style="color:#FFFFFF;border-color:rgba(255,255,255,0.3)" onclick="toast('August 2026 PDF downloaded')">📥 Download PDF</button>
+          </div>
+        </div>
+
+        <!-- Detailed Earnings & Deductions Breakdown -->
+        <div class="card">
+          <div class="section-head compact">
+            <div>
+              <div class="card-title">August 2026 Earnings vs Deductions</div>
+              <div class="card-sub">EMP-1024 · Priya Sharma · Lead Product Designer</div>
+            </div>
+            <span class="pill success">Paid & Published</span>
+          </div>
+
+          <div class="grid grid-2" style="gap:24px;margin-top:12px">
+            <!-- Earnings Column -->
+            <div style="background:var(--bg-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border)">
+              <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:10px">Earnings (+)</div>
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">Basic Salary</span>
+                  <b>₹60,000</b>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">House Rent Allowance (HRA)</span>
+                  <b>₹30,000</b>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">Special Allowance</span>
+                  <b>₹25,000</b>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">Performance Bonus</span>
+                  <b>₹5,000</b>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border);font-weight:700">
+                  <span>Gross Earnings</span>
+                  <span style="color:var(--primary)">₹1,20,000</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deductions Column -->
+            <div style="background:var(--bg-subtle);padding:14px;border-radius:var(--radius-md);border:1px solid var(--border)">
+              <div style="font-size:12px;font-weight:700;color:var(--danger);text-transform:uppercase;margin-bottom:10px">Deductions (−)</div>
+              <div style="display:flex;flex-direction:column;gap:8px;font-size:12.5px">
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">Provident Fund (EPF 12%)</span>
+                  <b>₹7,200</b>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">Income Tax (TDS)</span>
+                  <b>₹10,600</b>
+                </div>
+                <div style="display:flex;justify-content:space-between">
+                  <span class="muted">Professional Tax (PT)</span>
+                  <b>₹200</b>
+                </div>
+                <div style="display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border);font-weight:700">
+                  <span>Total Deductions</span>
+                  <span style="color:var(--danger)">− ₹18,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- YTD Financial Stats -->
+      <div class="grid grid-3" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">YTD Gross Earnings (FY 26-27)</span>
+            <div class="stat-icon purple">₹</div>
+          </div>
+          <div class="num">₹12.4 Lakh</div>
+          <div class="trend"><span>8 months published</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">YTD Total Taxes & PF</span>
+            <div class="stat-icon amber">🏛</div>
+          </div>
+          <div class="num">₹1.80 Lakh</div>
+          <div class="trend negative"><span>TDS deposited</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">YTD Net Transferred</span>
+            <div class="stat-icon green">💳</div>
+          </div>
+          <div class="num" style="color:var(--success)">₹10.6 Lakh</div>
+          <div class="trend"><span>100% on-time disbursement</span></div>
+        </div>
+      </div>
+
+      <!-- Historical Statement Records Table -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="padding:18px 22px">
+          <div>
+            <div class="card-title">Salary Statements History</div>
+            <div class="card-sub">All historical monthly pay slips available for download</div>
+          </div>
+          <button class="btn sm" onclick="toast('All payslips bundled as ZIP')">📦 Download All (ZIP)</button>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Gross Salary</th>
+              <th>Total Deductions</th>
+              <th>Net Disbursed</th>
+              <th>Disbursement Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>August 2026</b> <div class="muted">Latest</div></td>
+              <td>₹1,20,000</td>
+              <td style="color:var(--danger)">− ₹18,000</td>
+              <td style="color:var(--success);font-weight:700">₹1,02,000</td>
+              <td>31 Aug 2026</td>
+              <td><span class="pill success">Paid</span></td>
+              <td>
+                <button class="btn sm primary" onclick="openModal('payslipModal')">View Statement</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>July 2026</b></td>
+              <td>₹1,20,000</td>
+              <td style="color:var(--danger)">− ₹17,800</td>
+              <td style="color:var(--success);font-weight:700">₹1,02,200</td>
+              <td>31 Jul 2026</td>
+              <td><span class="pill success">Paid</span></td>
+              <td>
+                <button class="btn sm" onclick="openModal('payslipModal')">View Statement</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td><b>June 2026</b></td>
+              <td>₹1,18,000</td>
+              <td style="color:var(--danger)">− ₹17,500</td>
+              <td style="color:var(--success);font-weight:700">₹1,00,500</td>
+              <td>30 Jun 2026</td>
+              <td><span class="pill success">Paid</span></td>
+              <td>
+                <button class="btn sm" onclick="openModal('payslipModal')">View Statement</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Printable Official Payslip -->
+<div id="payslipModal" class="modal-backdrop">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-head">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals" style="height:32px;width:auto;object-fit:contain">
+        <div>
+          <h3>Salary Statement — August 2026</h3>
+          <p>Balaxi Pharmaceuticals Limited</p>
+        </div>
+      </div>
+      <button class="close" onclick="closeModal('payslipModal')">×</button>
+    </div>
+
+    <!-- Official Payslip Body -->
+    <div style="border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;background:var(--bg-subtle)">
+      <!-- Employee Info Grid -->
+      <div class="grid grid-2" style="font-size:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border)">
+        <div>
+          <div><b>Employee Name:</b> Priya Sharma</div>
+          <div><b>Employee ID:</b> EMP-1024</div>
+          <div><b>Designation:</b> Lead Product Designer</div>
+          <div><b>Department:</b> Engineering & UX</div>
+        </div>
+        <div>
+          <div><b>Bank Account:</b> HDFC Bank •••• 4912</div>
+          <div><b>PAN Card:</b> ABCPS1234F</div>
+          <div><b>PF UAN:</b> 100912384912</div>
+          <div><b>Working Days:</b> 22 / 22 Days</div>
+        </div>
+      </div>
+
+      <!-- Financial Table -->
+      <table class="table" style="font-size:12.5px;background:#FFFFFF;border-radius:var(--radius-sm)">
+        <thead>
+          <tr>
+            <th>Earnings Components</th>
+            <th>Amount (₹)</th>
+            <th>Deductions</th>
+            <th>Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Basic Salary</td>
+            <td>₹60,000</td>
+            <td>Provident Fund (EPF)</td>
+            <td>₹7,200</td>
+          </tr>
+          <tr>
+            <td>House Rent Allowance (HRA)</td>
+            <td>₹30,000</td>
+            <td>Income Tax (TDS)</td>
+            <td>₹10,600</td>
+          </tr>
+          <tr>
+            <td>Special Allowance</td>
+            <td>₹25,000</td>
+            <td>Professional Tax (PT)</td>
+            <td>₹200</td>
+          </tr>
+          <tr>
+            <td>Performance Bonus</td>
+            <td>₹5,000</td>
+            <td>Voluntary Deductions</td>
+            <td>₹0</td>
+          </tr>
+          <tr style="font-weight:700;background:var(--bg-subtle)">
+            <td>Total Gross Earnings</td>
+            <td>₹1,20,000</td>
+            <td>Total Deductions</td>
+            <td>₹18,000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Net Salary Banner -->
+      <div style="display:flex;justify-content:space-between;align-items:center;background:var(--primary-light);padding:14px 18px;border-radius:var(--radius-md);margin-top:14px;border:1px solid rgba(79, 70, 229, 0.3)">
+        <div>
+          <span style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase">Net Payable Salary Disbursed</span>
+          <div style="font-size:18px;font-weight:800;color:var(--primary)">₹1,02,000</div>
+          <small class="muted" style="font-size:11px">One Lakh Two Thousand Rupees Only</small>
+        </div>
+        <span class="pill success">Paid on 31 Aug 2026</span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeModal('payslipModal')">Close</button>
+      <button class="btn primary" onclick="toast('PDF Payslip generated & downloaded');closeModal('payslipModal')">📥 Download Official PDF</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

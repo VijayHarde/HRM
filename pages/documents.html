@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Documents Vault · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="documents">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search documents, IDs, letters…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Compliance Vault</strong>
+      <small>Encrypted & Versioned</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>📁</span> Employee / Document Management</div>
+          <h1 class="page-title">My Document Vault & Compliance</h1>
+          <p class="subtitle">Securely store, review, and renew employment credentials, identity proofs, and tax records.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('All documents exported as ZIP bundle')">📦 Download All</button>
+          <button class="btn primary" onclick="openModal('uploadModal')">＋ Upload Document</button>
+        </div>
+      </div>
+
+      <!-- Compliance Vault KPI Metrics -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Records</span>
+            <div class="stat-icon purple">📁</div>
+          </div>
+          <div class="num">8</div>
+          <div class="trend"><span>Encrypted in S3 Vault</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">HR Verified</span>
+            <div class="stat-icon green">✓</div>
+          </div>
+          <div class="num">6</div>
+          <div class="trend"><span>75% compliance score</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Pending Review</span>
+            <div class="stat-icon amber">⏳</div>
+          </div>
+          <div class="num">1</div>
+          <div class="trend"><span>Experience Letter</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Expiring Soon</span>
+            <div class="stat-icon rose">⚠️</div>
+          </div>
+          <div class="num" style="color:var(--danger)">1</div>
+          <div class="trend negative"><span>Work Permit (9 days left)</span></div>
+        </div>
+      </div>
+
+      <!-- Vault Filters & Grid -->
+      <div class="card">
+        <div class="section-head compact">
+          <div>
+            <div class="card-title">Employee Document Library</div>
+            <div class="card-sub">Files are scanned for viruses and cryptographically protected</div>
+          </div>
+          <div class="actions">
+            <button class="filter-chip active-filter" onclick="filterDocs('all', this)">All (8)</button>
+            <button class="filter-chip" onclick="filterDocs('verified', this)">Verified (6)</button>
+            <button class="filter-chip" onclick="filterDocs('action', this)">Needs Action (2)</button>
+          </div>
+        </div>
+
+        <div class="document-grid" id="docsGrid">
+          <!-- Doc 1: Aadhaar -->
+          <div class="document-card" data-status="verified">
+            <div class="doc-top">
+              <div class="doc-icon">🪪</div>
+              <span class="pill success">Verified</span>
+            </div>
+            <div class="doc-card-title">Identity Proof (Aadhaar Card)</div>
+            <div class="doc-meta">
+              Aadhaar · PDF · 1.2 MB<br>
+              Uploaded 08 Jan 2026 · Verified by HR
+            </div>
+            <div class="doc-footer">
+              <span class="section-note" style="color:var(--text-light);font-size:11px">Permanent</span>
+              <button class="btn sm" onclick="toast('Viewing Aadhaar card document')">View</button>
+            </div>
+          </div>
+
+          <!-- Doc 2: Offer Letter -->
+          <div class="document-card" data-status="verified">
+            <div class="doc-top">
+              <div class="doc-icon">📄</div>
+              <span class="pill success">Verified</span>
+            </div>
+            <div class="doc-card-title">Signed Offer Letter</div>
+            <div class="doc-meta">
+              Employment Contract · PDF · 840 KB<br>
+              Uploaded 08 Jan 2023 · Signed
+            </div>
+            <div class="doc-footer">
+              <span class="section-note" style="color:var(--text-light);font-size:11px">Permanent</span>
+              <button class="btn sm" onclick="toast('Viewing Offer Letter document')">View</button>
+            </div>
+          </div>
+
+          <!-- Doc 3: Experience Letter -->
+          <div class="document-card" data-status="action">
+            <div class="doc-top">
+              <div class="doc-icon">📜</div>
+              <span class="pill warn">Pending Review</span>
+            </div>
+            <div class="doc-card-title">Previous Experience Letter</div>
+            <div class="doc-meta">
+              Pixel Labs · PDF · 780 KB<br>
+              Uploaded 06 Sep 2026 · HR verification queued
+            </div>
+            <div class="doc-footer">
+              <span class="section-note" style="color:var(--warning);font-size:11px">Under Review</span>
+              <button class="btn sm" onclick="toast('Document is in HR verification queue')">Status</button>
+            </div>
+          </div>
+
+          <!-- Doc 4: Work Permit (Expiring) -->
+          <div class="document-card" data-status="action" style="border-color:var(--danger)">
+            <div class="doc-top">
+              <div class="doc-icon" style="background:var(--danger-light);color:var(--danger)">⚠️</div>
+              <span class="pill danger">Expiring Soon</span>
+            </div>
+            <div class="doc-card-title">Work Authorization / Permit</div>
+            <div class="doc-meta">
+              Work Permit · PDF · 2.1 MB<br>
+              <b style="color:var(--danger)">Expires 18 Sep 2026 (9 days left)</b>
+            </div>
+            <div class="doc-footer">
+              <span class="section-note" style="color:var(--danger);font-size:11px">Renewal Required</span>
+              <button class="btn sm danger" onclick="openModal('uploadModal')">Replace File</button>
+            </div>
+          </div>
+
+          <!-- Doc 5: PAN Card -->
+          <div class="document-card" data-status="verified">
+            <div class="doc-top">
+              <div class="doc-icon">💳</div>
+              <span class="pill success">Verified</span>
+            </div>
+            <div class="doc-card-title">PAN Card Identification</div>
+            <div class="doc-meta">
+              Tax ID · PDF · 520 KB<br>
+              Uploaded 08 Jan 2026 · Verified
+            </div>
+            <div class="doc-footer">
+              <span class="section-note" style="color:var(--text-light);font-size:11px">Permanent</span>
+              <button class="btn sm" onclick="toast('Viewing PAN Card document')">View</button>
+            </div>
+          </div>
+
+          <!-- Doc 6: Degree Certificate -->
+          <div class="document-card" data-status="verified">
+            <div class="doc-top">
+              <div class="doc-icon">🎓</div>
+              <span class="pill success">Verified</span>
+            </div>
+            <div class="doc-card-title">B.Des Degree Certificate</div>
+            <div class="doc-meta">
+              Academics · PDF · 1.8 MB<br>
+              Uploaded 08 Jan 2026 · Verified
+            </div>
+            <div class="doc-footer">
+              <span class="section-note" style="color:var(--text-light);font-size:11px">Permanent</span>
+              <button class="btn sm" onclick="toast('Viewing Degree certificate')">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Upload Document -->
+<div id="uploadModal" class="modal-backdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="card-kicker">DOCUMENT COMPLIANCE</div>
+        <h3>Upload New Document</h3>
+        <p>Submit documents for HR verification and compliance tracking.</p>
+      </div>
+      <button class="close" onclick="closeModal('uploadModal')">×</button>
+    </div>
+
+    <form onsubmit="event.preventDefault(); handleDocumentUpload();">
+      <div class="grid grid-2">
+        <div class="floating">
+          <select id="docCategorySelect" required>
+            <option value="Work Authorization">Work Authorization / Permit</option>
+            <option value="Identity Proof">Identity Proof (Passport / Aadhaar)</option>
+            <option value="Academic Certificate">Academic Certificate</option>
+            <option value="Tax Document">Tax / Bank Document</option>
+            <option value="Previous Employment">Previous Employment Letter</option>
+          </select>
+          <label>Document Category</label>
+        </div>
+
+        <div class="floating">
+          <input type="date" id="docExpiryDate">
+          <label>Expiry Date (if applicable)</label>
+        </div>
+      </div>
+
+      <label class="upload-drop" for="documentFile">
+        <div class="upload-icon">↑</div>
+        <strong>Drag and drop your file here</strong>
+        <small>or <span style="color:var(--primary);text-decoration:underline">browse files from computer</span></small>
+        <small style="color:var(--text-light)">Supported: PDF, JPG, PNG · Max file size 10 MB</small>
+      </label>
+      <input id="documentFile" type="file" accept=".pdf,.jpg,.jpeg,.png" hidden onchange="showSelectedFile(this)">
+
+      <div id="filePreview" class="file-preview">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">📄</span>
+          <div>
+            <b id="fileName" style="font-size:13px">document.pdf</b>
+            <small id="fileSize" class="muted" style="display:block">1.4 MB</small>
+          </div>
+        </div>
+        <button type="button" class="icon-btn" onclick="document.getElementById('documentFile').value='';document.getElementById('filePreview').classList.remove('show')">×</button>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn" onclick="closeModal('uploadModal')">Cancel</button>
+        <button type="submit" class="btn primary">Upload & Send for Verification</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+function filterDocs(filter, btn) {
+  document.querySelectorAll(".filter-chip").forEach(b => b.classList.remove("active-filter"));
+  btn.classList.add("active-filter");
+  
+  const cards = document.querySelectorAll(".document-card");
+  cards.forEach(c => {
+    if (filter === "all") c.style.display = "flex";
+    else if (c.dataset.status === filter) c.style.display = "flex";
+    else c.style.display = "none";
+  });
+}
+
+function handleDocumentUpload() {
+  const cat = document.getElementById("docCategorySelect").value;
+  closeModal("uploadModal");
+  toast(`Document (${cat}) uploaded successfully and queued for HR verification!`);
+}
+</script>
+</body>
+</html>

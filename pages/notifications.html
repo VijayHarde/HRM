@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Notification Center · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="notifications">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search notification alerts…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Notification Feed</strong>
+      <small>Live System Alerts</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>🔔</span> Workspace / Inbox</div>
+          <h1 class="page-title">Notification Center</h1>
+          <p class="subtitle">Stay updated on approval decisions, compliance reminders, and salary releases.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="toast('All notifications marked as read');document.querySelectorAll('.notification-item.unread').forEach(e=>e.classList.remove('unread'))">Mark All Read</button>
+        </div>
+      </div>
+
+      <div class="card" style="max-width:800px;margin:0 auto">
+        <div class="tabs" id="notifTabs">
+          <button class="active" onclick="filterNotifs('all', this)">All</button>
+          <button onclick="filterNotifs('unread', this)">Unread</button>
+          <button onclick="filterNotifs('approvals', this)">Approvals</button>
+          <button onclick="filterNotifs('compliance', this)">Compliance</button>
+        </div>
+
+        <div id="notifsContainer" style="display:flex;flex-direction:column;gap:8px">
+          <div class="notification-item unread" data-cat="approvals">
+            <div class="notif-icon" style="background:var(--accent-light)">📅</div>
+            <div class="notif-body" style="flex:1">
+              <b>Leave Request Submitted</b>
+              <p>Priya Sharma applied for 3 days Annual Leave (21–23 Sep).</p>
+              <small>10 mins ago</small>
+            </div>
+            <button class="btn sm primary" onclick="go('approvals')">Review</button>
+          </div>
+
+          <div class="notification-item unread" data-cat="compliance">
+            <div class="notif-icon" style="background:var(--warning-light)">⚠️</div>
+            <div class="notif-body" style="flex:1">
+              <b>Work Permit Expiry Warning</b>
+              <p>Work Permit document is expiring on 18 Sep 2026. Please upload a renewal copy.</p>
+              <small>1 hour ago</small>
+            </div>
+            <button class="btn sm" onclick="go('documents')">Upload</button>
+          </div>
+
+          <div class="notification-item unread" data-cat="approvals">
+            <div class="notif-icon" style="background:var(--info-light)">💳</div>
+            <div class="notif-body" style="flex:1">
+              <b>August 2026 Payroll Processed</b>
+              <p>August 2026 payroll statement is finalized and published to your self-service vault.</p>
+              <small>3 hours ago</small>
+            </div>
+            <button class="btn sm" onclick="go('payslips')">View Statement</button>
+          </div>
+
+          <div class="notification-item" data-cat="approvals">
+            <div class="notif-icon" style="background:var(--success-light)">⏱</div>
+            <div class="notif-body" style="flex:1">
+              <b>Attendance Regularization Approved</b>
+              <p>Your request to regularize check-in time for 07 Sep has been approved by manager Rohan Mehta.</p>
+              <small>Yesterday at 17:45</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+<script>
+function filterNotifs(cat, btn) {
+  document.querySelectorAll("#notifTabs button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  
+  const items = document.querySelectorAll(".notification-item");
+  items.forEach(item => {
+    if (cat === "all") item.style.display = "flex";
+    else if (cat === "unread") item.style.display = item.classList.contains("unread") ? "flex" : "none";
+    else if (cat === item.dataset.cat) item.style.display = "flex";
+    else item.style.display = "none";
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Team · Balaxi HR Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-page="team">
+
+<header class="top-header">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="mobileMenu" class="mobile-menu">☰</button>
+    <a href="dashboard.html" class="header-brand">
+      <img src="../assets/logo.png" alt="Balaxi Pharmaceuticals">
+      <span class="brand-badge">HRM v5.0</span>
+    </a>
+  </div>
+  
+  <div class="header-center">
+    <span class="header-search-icon">🔍</span>
+    <input class="header-search" placeholder="Search team members, skills, shifts…">
+  </div>
+
+  <div class="header-right">
+    <div class="user-chip" onclick="go('profile')" title="View profile">
+      <img src="../assets/avatar.svg" alt="User">
+      <div>
+        <b data-user>—</b>
+        <span class="role-tag" data-role>—</span>
+      </div>
+    </div>
+    <button id="logout" class="btn sm">Sign out</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="nav-label">Workspace</div>
+    <nav id="nav" class="nav"></nav>
+    <div class="sidebar-card">
+      <strong>Engineering Team</strong>
+      <small>18 Direct Reports</small>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="animate">
+      
+      <div class="section-head">
+        <div>
+          <div class="crumb"><span>👥</span> Management / Team Hub</div>
+          <h1 class="page-title">My Team & Availability</h1>
+          <p class="subtitle">Monitor real-time working status, shift schedules, leave calendars, and team performance.</p>
+        </div>
+        <div class="actions">
+          <button class="btn" onclick="go('approvals')">✓ Team Approvals (3)</button>
+          <button class="btn primary" onclick="go('reports')">📊 Team Reports</button>
+        </div>
+      </div>
+
+      <!-- Team Stats -->
+      <div class="grid grid-4" style="margin-bottom:22px">
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Total Team Size</span>
+            <div class="stat-icon blue">👥</div>
+          </div>
+          <div class="num">18</div>
+          <div class="trend"><span>Direct engineering reports</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Active Today</span>
+            <div class="stat-icon green">⏱</div>
+          </div>
+          <div class="num">16</div>
+          <div class="trend"><span>89% present (12 Office, 4 Remote)</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">On Leave Today</span>
+            <div class="stat-icon purple">📅</div>
+          </div>
+          <div class="num">2</div>
+          <div class="trend"><span>Meera (Casual) · Vikram</span></div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-head">
+            <span class="label">Pending Decisions</span>
+            <div class="stat-icon amber">⏳</div>
+          </div>
+          <div class="num">3</div>
+          <div class="trend negative"><span>Leave & Punch fixes</span></div>
+        </div>
+      </div>
+
+      <!-- Team Members Directory Table -->
+      <div class="card table-wrap">
+        <div class="section-head compact" style="padding:18px 22px">
+          <div>
+            <div class="card-title">Team Roster & Real-Time Presence</div>
+            <div class="card-sub">Live presence based on today's biometric and web check-ins</div>
+          </div>
+          <div class="floating" style="margin-bottom:0">
+            <input id="search" placeholder=" " style="height:36px;width:220px">
+            <label>Filter team members</label>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Team Member</th>
+              <th>Designation</th>
+              <th>Today's Presence</th>
+              <th>Check-in Time</th>
+              <th>Leave Balance</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Priya">
+                  <div>
+                    <b>Priya Sharma</b>
+                    <span class="muted">EMP-1024 · priya@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Lead Product Designer</td>
+              <td><span class="pill success">Present (Pune Office)</span></td>
+              <td>09:14 AM</td>
+              <td><b>27 days</b></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="toast('1:1 Notes opened for Priya Sharma')">1:1 Notes</button>
+                  <button class="btn sm primary" onclick="go('approvals')">Review Requests</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Arjun">
+                  <div>
+                    <b>Arjun Kapoor</b>
+                    <span class="muted">EMP-1025 · arjun@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Senior Frontend Engineer</td>
+              <td><span class="pill warn">Late Check-in (Remote)</span></td>
+              <td>09:47 AM</td>
+              <td><b>8 days</b></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="toast('1:1 Notes opened for Arjun Kapoor')">1:1 Notes</button>
+                  <button class="btn sm" onclick="toast('Timesheet opened for Arjun')">Timesheet</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Meera">
+                  <div>
+                    <b>Meera Shah</b>
+                    <span class="muted">EMP-1026 · meera@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Senior UX Researcher</td>
+              <td><span class="pill purple">On Leave (Casual)</span></td>
+              <td>—</td>
+              <td><b>14 days</b></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm" onclick="toast('Leave history opened for Meera')">Leave Log</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="employee-cell">
+                  <img src="../assets/avatar.svg" alt="Vikram">
+                  <div>
+                    <b>Vikram Nair</b>
+                    <span class="muted">EMP-1011 · vikram@balaxipharma.in</span>
+                  </div>
+                </div>
+              </td>
+              <td>Senior Backend Engineer</td>
+              <td><span class="pill danger">Notice Period (Active)</span></td>
+              <td>09:05 AM</td>
+              <td><b>5 days</b></td>
+              <td>
+                <div style="display:flex;gap:6px">
+                  <button class="btn sm danger" onclick="go('offboarding')">Exit Clearance</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script src="../js/app.js"></script>
+</body>
+</html>
