@@ -27,7 +27,7 @@ const USERS = {
     email: "employee@balaxipharma.in",
     password: "Employee@123",
     role: "Employee",
-    name: "Priya Sharma",
+    name: "Vijay Harde",
     title: "Lead Formulations Scientist",
     department: "R&D Operations",
     id: "EMP-1024",
@@ -119,8 +119,8 @@ const BADGES = {
 };
 
 const NOTIFICATIONS = [
-  { id: 1, type: "approval", title: "Leave Request Submitted", desc: "Priya Sharma applied for 3 days Annual Leave (21–23 Sep)", time: "10 mins ago", unread: true, icon: "📅", bg: "var(--accent-light)" },
-  { id: 2, type: "alert", title: "Document Expiring Soon", desc: "Work Permit for Priya Sharma expires in 9 days (18 Sep 2026)", time: "1 hour ago", unread: true, icon: "⚠️", bg: "var(--warning-light)" },
+  { id: 1, type: "approval", title: "Leave Request Submitted", desc: "Vijay Harde applied for 3 days Annual Leave (21–23 Sep)", time: "10 mins ago", unread: true, icon: "📅", bg: "var(--accent-light)" },
+  { id: 2, type: "alert", title: "Document Expiring Soon", desc: "Work Permit for Vijay Harde expires in 9 days (18 Sep 2026)", time: "1 hour ago", unread: true, icon: "⚠️", bg: "var(--warning-light)" },
   { id: 3, type: "payroll", title: "Payroll Period Ready for Review", desc: "August 2026 payroll batch is prepared for HR locking", time: "3 hours ago", unread: true, icon: "💳", bg: "var(--info-light)" },
   { id: 4, type: "system", title: "Attendance Regularization Approved", desc: "Manager Rohan Mehta approved 07 Sep check-in adjustment", time: "Yesterday", unread: false, icon: "⏱", bg: "var(--success-light)" }
 ];
